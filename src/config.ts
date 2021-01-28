@@ -9,9 +9,9 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'wss://rinkeby.infura.io/ws/v3/751553d8430144e99fb0340edc99d9ab',
     deployments: require('./gnostic-dollar/deployments/deployments.rinkeby.json'),
     externalTokens: {
-      TRI: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 9],
-      'TRI-ETH': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
-      PROPHET: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 9],
+      TRI: ['0x3381c2cd88647b0aceBE2C17Ab4444D4fA7A9d89', 9],
+      'TRI-ETH': ['0xe62b0f96fd9335a9e05bfe866def8a7c5cb0bce9', 18],
+      PROPHET: ['0x05f866F1a94DDa57Cc9E828c4127e667A5FF046d', 9],
       DAI: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
       // TODO: replace with real address
       'GSD_DAI-UNI-LPv2': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
@@ -40,17 +40,17 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'wss://rinkeby.infura.io/ws/v3/751553d8430144e99fb0340edc99d9ab',
     deployments: require('./gnostic-dollar/deployments/deployments.rinkeby.json'),
     externalTokens: {
-      TRI: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 9],
-      'TRI-ETH': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
-      PROPHET: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 9],
+      TRI: ['0x3381c2cd88647b0aceBE2C17Ab4444D4fA7A9d89', 9],
+      'TRI-ETH': ['0xe62b0f96fd9335a9e05bfe866def8a7c5cb0bce9', 18],
+      PROPHET: ['0x05f866F1a94DDa57Cc9E828c4127e667A5FF046d', 9],
       DAI: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
       // TODO: replace with real address
-      'GSD_DAI-UNI-LPv2': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
-      'GSS_DAI-UNI-LPv2': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
+      'GSD_DAI-UNI-LPv2': ['0x63D0C00C705836E95066a4A49835564adb4c000D', 18],
+      'GSS_DAI-UNI-LPv2': ['0x59500d07BEE368c31273215cf4DbD11dfDa8E19d', 18],
     },
-    baseLaunchDate: new Date('2020-01-29T00:00:00Z'),
-    bondLaunchesAt: new Date('2020-02-03T00:00:00Z'),
-    boardroomLaunchesAt: new Date('2020-02-03T00:00:00Z'),
+    baseLaunchDate: new Date('2021-01-28T00:00:00Z'),
+    bondLaunchesAt: new Date('2020-02-02T00:00:00Z'),
+    boardroomLaunchesAt: new Date('2020-02-02T00:00:00Z'),
   },
 };
 
