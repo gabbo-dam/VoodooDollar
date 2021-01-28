@@ -8,7 +8,6 @@ export interface BankInfo {
   depositTokenName: ContractName;
   earnTokenName: ContractName;
   sort: number;
-  finished: boolean;
 }
 
 export interface Bank extends  BankInfo {

@@ -10,7 +10,6 @@ import Spacer from '../../components/Spacer';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 
-import config from '../../config';
 import useBank from '../../hooks/useBank';
 import useRedeem from '../../hooks/useRedeem';
 import { Bank as BankEntity } from '../../basis-cash';
@@ -60,15 +59,15 @@ const Bank: React.FC = () => {
 const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   let pairName: string;
   let uniswapUrl: string;
-  if (bank.depositTokenName.includes('GSD')) {
-    pairName = 'GSD-DAI pair';
-    uniswapUrl = 'https://app.uniswap.org/#/add/0x3449FC1Cd036255BA1EB19d65fF4BA2b8903A69a/0x6B175474E89094C44Da98b954EedeAC495271d0F';
+  if (bank.depositTokenName.includes('BAC')) {
+    pairName = 'BAC-DAI pair';
+    uniswapUrl = 'https://medium.com/@basiscash/#bac-dai';
   } else {
-    pairName = 'GSS-DAI pair';
-    uniswapUrl = 'https://app.uniswap.org/#/add/0xa7ED29B253D8B4E3109ce07c80fc570f81B63696/0x6B175474E89094C44Da98b954EedeAC495271d0F';
+    pairName = 'BAS-DAI pair';
+    uniswapUrl = 'https://medium.com/@basiscash/#bas-dai';
   }
   return (
-    <StyledLink href={uniswapUrl} target="_blank">
+    <StyledLink href={uniswapUrl}>
       {`🦄  Provide liquidity to ${pairName} on Uniswap  🦄`}
     </StyledLink>
   );

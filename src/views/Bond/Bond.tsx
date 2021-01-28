@@ -8,15 +8,12 @@ import PageHeader from '../../components/PageHeader';
 import ExchangeCard from './components/ExchangeCard';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
-import useBondStats from '../../hooks/useBondStats';
+import useBondStats from '../../hooks/token/useBondStats';
 import useBasisCash from '../../hooks/useBasisCash';
 import { useTransactionAdder } from '../../state/transactions/hooks';
+import useCashStats from '../../hooks/token/useCashStats';
 import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
-import ExchangeStat from './components/ExchangeStat';
-import useCashStatsFromTreasury from '../../hooks/useCashStatsFromTreasury';
-import useTokenBalance from '../../hooks/useTokenBalance';
-import { getDisplayBalance } from '../../utils/formatBalance';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
@@ -24,16 +21,14 @@ const Bond: React.FC = () => {
   const basisCash = useBasisCash();
   const addTransaction = useTransactionAdder();
   const bondStat = useBondStats();
-  const cashStat = useCashStatsFromTreasury();
-
-  const bondBalance = useTokenBalance(basisCash?.GSB);
+  const cashStat = useCashStats();
 
   const handleBuyBonds = useCallback(
     async (amount: string) => {
       const tx = await basisCash.buyBonds(amount);
       const bondAmount = Number(amount) / Number(cashStat.priceInDAI);
       addTransaction(tx, {
-        summary: `Buy ${bondAmount.toFixed(2)} GSB with ${amount} GSD`,
+        summary: `Buy ${bondAmount.toFixed(2)} BAB with ${amount} BAC`,
       });
     },
     [basisCash, addTransaction, cashStat],
@@ -42,14 +37,14 @@ const Bond: React.FC = () => {
   const handleRedeemBonds = useCallback(
     async (amount: string) => {
       const tx = await basisCash.redeemBonds(amount);
-      addTransaction(tx, { summary: `Redeem ${amount} GSB` });
+      addTransaction(tx, { summary: `Redeem ${amount} BAB` });
     },
     [basisCash, addTransaction],
   );
   const cashIsOverpriced = useMemo(() => Number(cashStat?.priceInDAI) > 1.0, [cashStat]);
   const cashIsUnderPriced = useMemo(() => Number(cashStat?.priceInDAI) < 1.0, [cashStat]);
 
-  const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
+  const isLaunched = Date.now() >= config.bondLaunchesAt;
   if (!isLaunched) {
     return (
       <Switch>
@@ -61,8 +56,8 @@ const Bond: React.FC = () => {
           />
           <LaunchCountdown
             deadline={config.bondLaunchesAt}
-            description="How does Basis bond work?"
-            descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
+            description="How does Basis bonds work?"
+            descriptionLink="https://medium.com/basis-cash#TODO"
           />
         </Page>
       </Switch>
@@ -84,44 +79,26 @@ const Bond: React.FC = () => {
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Purchase"
-                  fromToken={basisCash.GSD}
-                  fromTokenName="Gnostic Dollar"
-                  toToken={basisCash.GSB}
-                  toTokenName="Gnostic Bond"
-                  priceDesc={
-                    cashIsOverpriced
-                      ? 'GSD is over $1'
-                      : bondStat
-                      ? `${Math.floor((100 / Number(bondStat.priceInDAI)) - 100)}% return when GSD > $1`
-                      : '-'
-                  }
+                  fromToken={basisCash.BAC}
+                  fromTokenName="Basis Cash"
+                  toToken={basisCash.BAB}
+                  toTokenName="Basis Bond"
+                  priceDesc={`BAB Price: ${!bondStat ? '-' : '$' + bondStat.priceInDAI}`}
                   onExchange={handleBuyBonds}
                   disabled={!bondStat || cashIsOverpriced}
                 />
               </StyledCardWrapper>
-              <StyledStatsWrapper>
-                <ExchangeStat
-                  tokenName="GSD"
-                  description="Current Price (TWAP)"
-                  price={cashStat?.priceInDAI || '-'}
-                />
-                <Spacer size="md" />
-                <ExchangeStat
-                  tokenName="GSB"
-                  description="Current Price (GSD)^2"
-                  price={bondStat?.priceInDAI || '-'}
-                />
-              </StyledStatsWrapper>
+              <Spacer size="lg" />
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Redeem"
-                  fromToken={basisCash.GSB}
-                  fromTokenName="Gnostic Bond"
-                  toToken={basisCash.GSD}
-                  toTokenName="Gnostic Dollar"
-                  priceDesc={`${getDisplayBalance(bondBalance)} GSB Available`}
+                  fromToken={basisCash.BAB}
+                  fromTokenName="Basis Bond"
+                  toToken={basisCash.BAC}
+                  toTokenName="Basis Cash"
+                  priceDesc="1 BAB = 1 BAC"
                   onExchange={handleRedeemBonds}
-                  disabled={!bondStat || bondBalance.eq(0) || cashIsUnderPriced}
+                  disabled={!bondStat || cashIsUnderPriced}
                 />
               </StyledCardWrapper>
             </StyledBond>
@@ -145,7 +122,7 @@ const Bond: React.FC = () => {
 
 const StyledBond = styled.div`
   display: flex;
-  width: 900px;
+  width: 600px;
   @media (max-width: 768px) {
     width: 100%;
     flex-flow: column nowrap;
@@ -160,19 +137,6 @@ const StyledCardWrapper = styled.div`
   @media (max-width: 768px) {
     width: 80%;
   }
-`;
-
-const StyledStatsWrapper = styled.div`
-  display: flex;
-  flex: 0.8;
-  margin: 0 20px;
-  flex-direction: column;
-
-  @media (max-width: 768px) {
-    width: 80%;
-    margin: 16px 0;
-  }
-
 `;
 
 export default Bond;

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 
@@ -14,15 +14,6 @@ import useStakedBalanceOnBoardroom from '../../hooks/useStakedBalanceOnBoardroom
 
 import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
-import Stat from './components/Stat';
-import ProgressCountdown from './components/ProgressCountdown';
-import useCashStatsFromTreasury from '../../hooks/useCashStatsFromTreasury';
-import useTreasuryAmount from '../../hooks/useTreasuryAmount';
-import Humanize from 'humanize-plus';
-import { getBalance } from '../../utils/formatBalance';
-import useLastTreasuryAllocationTime from '../../hooks/useLastTreasuryAllocationTime';
-import Notice from '../../components/Notice';
-import useBoardroomVersion from '../../hooks/useBoardroomVersion';
 
 const Boardroom: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -30,35 +21,7 @@ const Boardroom: React.FC = () => {
   const { onRedeem } = useRedeemOnBoardroom();
   const stakedBalance = useStakedBalanceOnBoardroom();
 
-  const cashStat = useCashStatsFromTreasury();
-  const treasuryAmount = useTreasuryAmount();
-  const scalingFactor = useMemo(
-    () => (cashStat ? Number(cashStat.priceInDAI).toFixed(2) : null),
-    [cashStat],
-  );
-  const lastAllocation = useLastTreasuryAllocationTime();
-  const nextAllocation = new Date(
-    lastAllocation.getTime() + config.treasuryAllocationDelayInSec * 1000,
-  );
-
-  const boardroomVersion = useBoardroomVersion();
-  const migrateNotice = useMemo(() => {
-    if (boardroomVersion === 'latest') {
-      return (
-        <StyledNoticeWrapper>
-          <Notice color="yellow">
-            <b>A new expansion of Boardroom will take place on Dec 12, 00:00 UTC.</b>
-            <br />
-            Once the upgrade is complete, you must ‘Settle and withdraw’ your stake <br />
-            and <b>stake again on the updated Boardroom</b> to keep earning seigniorage.
-          </Notice>
-        </StyledNoticeWrapper>
-      );
-    }
-    return <></>;
-  }, [boardroomVersion]);
-
-  const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
+  const isLaunched = Date.now() >= config.boardroomLaunchesAt;
   if (!isLaunched) {
     return (
       <Switch>
@@ -66,12 +29,12 @@ const Boardroom: React.FC = () => {
           <PageHeader
             icon={'🤝'}
             title="Join the Boardroom"
-            subtitle="Deposit Gnostic Shares and earn inflationary rewards"
+            subtitle="Deposit Basis Shares and earn inflationary rewards"
           />
           <LaunchCountdown
             deadline={config.boardroomLaunchesAt}
             description="How does the boardroom work?"
-            descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism#expansionary-policy"
+            descriptionLink="https://medium.com/basis-cash#TODO"
           />
         </Page>
       </Switch>
@@ -86,35 +49,8 @@ const Boardroom: React.FC = () => {
             <PageHeader
               icon={'🤝'}
               title="Join the Boardroom"
-              subtitle="Deposit Gnostic Shares and earn inflationary rewards"
+              subtitle="Deposit Basis Shares and earn inflationary rewards"
             />
-            {migrateNotice}
-            <StyledHeader>
-              <ProgressCountdown
-                base={lastAllocation}
-                deadline={nextAllocation}
-                description="Next Seigniorage"
-              />
-              <Stat
-                icon="💵"
-                title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
-                description="GSD Price (TWAP)"
-              />
-              <Stat
-                icon="🚀"
-                title={scalingFactor ? `x${scalingFactor}` : '-'}
-                description="Scaling Factor"
-              />
-              <Stat
-                icon="💰"
-                title={
-                  treasuryAmount
-                    ? `~$${Humanize.compactInteger(getBalance(treasuryAmount), 2)}`
-                    : '-'
-                }
-                description="Treasury Amount"
-              />
-            </StyledHeader>
             <StyledBoardroom>
               <StyledCardsWrapper>
                 <StyledCardWrapper>
@@ -160,31 +96,6 @@ const StyledBoardroom = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
-`;
-
-const StyledHeader = styled.div`
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: ${(props) => props.theme.spacing[5]}px;
-  width: 960px;
-
-  > * {
-    flex: 1;
-    height: 84px;
-    margin: 0 ${(props) => props.theme.spacing[2]}px;
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 100%;
-  }
-`;
-
-const StyledNoticeWrapper = styled.div`
-  width: 640px;
-  margin-top: -20px;
-  margin-bottom: 40px;
 `;
 
 const StyledCardsWrapper = styled.div`

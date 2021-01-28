@@ -12,11 +12,6 @@ export type Configuration = {
   baseLaunchDate: Date,
   bondLaunchesAt: Date,
   boardroomLaunchesAt: Date,
-
-  refreshInterval: number;
-  gasLimitMultiplier: number;
-  treasuryAllocationDelayInSec: number;
-  circSupply: string;
 };
 
 export type EthereumConfig = {

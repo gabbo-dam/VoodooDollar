@@ -4,7 +4,7 @@ import { useWallet } from 'use-wallet';
 import useDebounce from '../../hooks/useDebounce';
 import useIsWindowVisible from '../../hooks/useIsWindowVisible';
 import { updateBlockNumber } from './actions';
-import { getDefaultProvider } from '../../utils/provider';
+import { ethers } from 'ethers';
 
 export default function Updater(): null {
   const { ethereum, chainId } = useWallet();
@@ -39,7 +39,7 @@ export default function Updater(): null {
     if (!ethereum || !chainId || !windowVisible) return undefined;
     setState({ chainId, blockNumber: null });
 
-    const provider = getDefaultProvider();
+    const provider = new ethers.providers.Web3Provider(ethereum);
     provider
       .getBlockNumber()
       .then(blockNumberCallback)

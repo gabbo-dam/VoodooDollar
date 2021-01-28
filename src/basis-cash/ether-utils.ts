@@ -19,6 +19,6 @@ export function balanceToDecimal(s: string): string {
   return formatUnits(s);
 }
 
-export function decimalToBalance(d: string | number, decimals = 18): BigNumber {
-  return parseUnits(String(d), decimals);
+export function decimalToBalance(d: string | number): BigNumber {
+  return parseUnits(String(d));
 }

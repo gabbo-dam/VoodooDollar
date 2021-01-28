@@ -4,7 +4,7 @@ import { useWallet } from 'use-wallet';
 import { useAddPopup, useBlockNumber } from '../application/hooks';
 import { AppDispatch, AppState } from '../index';
 import { checkedTransaction, finalizeTransaction } from './actions';
-import { getDefaultProvider } from '../../utils/provider';
+import { ethers } from 'ethers';
 
 export function shouldCheck(
   lastBlockNumber: number,
@@ -45,7 +45,8 @@ export default function Updater(): null {
       return;
     }
 
-    const provider = getDefaultProvider();
+    const provider = new ethers.providers.Web3Provider(ethereum);
+
     Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .forEach((hash) => {

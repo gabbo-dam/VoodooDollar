@@ -23,40 +23,22 @@ import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardr
 import TokenSymbol from '../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../hooks/useStakeToBoardroom';
 import useWithdrawFromBoardroom from '../../../hooks/useWithdrawFromBoardroom';
-import useBoardroomVersion from '../../../hooks/useBoardroomVersion';
-import MigrationDisclaimerModal from '../../../components/MigrationDisclaimerModal';
 
 const Stake: React.FC = () => {
-  const basisCash = useBasisCash();
-  const boardroomVersion = useBoardroomVersion();
-  const [approveStatus, approve] = useApprove(
-    basisCash.GSS,
-    basisCash.boardroomByVersion(boardroomVersion).address,
-  );
+  const { BAS, contracts: { Boardroom } } = useBasisCash();
+  const [approveStatus, approve] = useApprove(BAS, Boardroom.address);
 
-  const tokenBalance = useTokenBalance(basisCash.GSS);
+  const tokenBalance = useTokenBalance(BAS);
   const stakedBalance = useStakedBalanceOnBoardroom();
-  const isOldBoardroomMember = boardroomVersion !== 'latest';
 
   const { onStake } = useStakeToBoardroom();
   const { onWithdraw } = useWithdrawFromBoardroom();
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
-    <DepositModal
-      max={tokenBalance}
-      onConfirm={(value) => {
-        onStake(value);
-        onDismissDeposit();
-      }}
-      tokenName={'Gnostic Share'}
-    />,
-  );
-
-  const [showDisclaimerModal, dismissDisclaimerModal] = useModal(
-    <MigrationDisclaimerModal
-      onConfirm={() => onPresentDeposit()}
-      onDismiss={() => dismissDisclaimerModal()}
-    />,
+    <DepositModal max={tokenBalance} onConfirm={(value) => {
+      onStake(value);
+      onDismissDeposit();
+    }} tokenName={'Basis Share'} />,
   );
 
   const [onPresentWithdraw, onDismissWithdraw] = useModal(
@@ -66,7 +48,7 @@ const Stake: React.FC = () => {
         onWithdraw(value);
         onDismissWithdraw();
       }}
-      tokenName={'Gnostic Share'}
+      tokenName={'Basis Share'}
     />,
   );
 
@@ -76,17 +58,17 @@ const Stake: React.FC = () => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol="GSS" />
+              <TokenSymbol symbol="BAS" />
             </CardIcon>
             <Value value={getDisplayBalance(stakedBalance)} />
-            <Label text="Gnostic Share Staked" />
+            <Label text="Basis Share Staked" />
           </StyledCardHeader>
           <StyledCardActions>
-            {!isOldBoardroomMember && approveStatus !== ApprovalState.APPROVED ? (
+            {approveStatus !== ApprovalState.APPROVED ? (
               <Button
                 disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                 onClick={approve}
-                text="Approve Gnostic Share"
+                text="Approve Basis Share"
               />
             ) : (
               <>
@@ -94,10 +76,7 @@ const Stake: React.FC = () => {
                   <RemoveIcon />
                 </IconButton>
                 <StyledActionSpacer />
-                <IconButton
-                  disabled={isOldBoardroomMember}
-                  onClick={() => (!isOldBoardroomMember ? showDisclaimerModal() : null)}
-                >
+                <IconButton onClick={onPresentDeposit}>
                   <AddIcon />
                 </IconButton>
               </>

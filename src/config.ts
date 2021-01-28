@@ -1,105 +1,112 @@
 import { ChainId } from '@uniswap/sdk';
 import { Configuration } from './basis-cash/config';
 import { BankInfo } from './basis-cash';
-import { formatUnits } from 'ethers/lib/utils';
-import { BigNumber } from 'ethers';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
-    chainId: ChainId.RINKEBY,
-    etherscanUrl: 'https://rinkeby.etherscan.io',
-    defaultProvider: 'https://rinkeby.infura.io/v3/06ecf536272c43c78adfba29b908a68d',
-    deployments: require('./basis-cash/deployments/deployments.rinkeby.json'),
+    chainId: ChainId.ROPSTEN,
+    etherscanUrl: 'https://ropsten.etherscan.io',
+    defaultProvider: 'wss://ropsten.infura.io/ws/v3/d3bcb3c54e8c49a7bd1a9b6773e65bbe',
+    deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
     externalTokens: {
-      DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
-      TRI: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8', 18],
-      PROPHET: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
-      ETH_TRILP: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
-      'GSD_DAI-UNI-LPv2': ['0xd4405F0704621DBe9d4dEA60E128E0C3b26bddbD', 18],
-      'GSS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
+      DAI: ['0xf59b931a9e471c57306Ee330bE031B3fF28D6825', 18],
+      yCRV: ['0xf59b931a9e471c57306Ee330bE031B3fF28D6825', 18],
+      SUSD: ['0xf59b931a9e471c57306Ee330bE031B3fF28D6825', 18],
+      USDC: ['0xf59b931a9e471c57306Ee330bE031B3fF28D6825', 18],
+      USDT: ['0xf59b931a9e471c57306Ee330bE031B3fF28D6825', 18],
+      // TODO: replace with real address
+      'BAC_DAI-UNI-LPv2': ['0xEB249F8cbD61f5B6E55cf6a1A1e944aad5c25e15', 18],
+      'BAS_DAI-UNI-LPv2': ['0x849e93C8A25AaBf440864682E97B0286713a8f5d', 18],
     },
     baseLaunchDate: new Date('2020-11-26T00:00:00Z'),
-    bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
-    boardroomLaunchesAt: new Date('2020-12-03T15:00:00Z'),
-    refreshInterval: 10000,
-    gasLimitMultiplier: 1.1,
-    treasuryAllocationDelayInSec: 86400,
-    // TODO: it should be calculated by subtracting GSD supplies in the Treasury and Boardroom
-    circSupply: '50001',
+    bondLaunchesAt: new Date('2020-12-04T00:00:00Z'),
+    boardroomLaunchesAt: new Date('2020-12-04T00:00:00Z'),
   },
   production: {
-    chainId: ChainId.MAINNET,
+    /*chainId: ChainId.MAINNET,
     etherscanUrl: 'https://etherscan.io',
-    defaultProvider: 'https://mainnet.infura.io/v3/06ecf536272c43c78adfba29b908a68d',
-    deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
+    defaultProvider: 'wss://mainnet.infura.io/ws/v3/d3bcb3c54e8c49a7bd1a9b6773e65bbe',
+    deployments: require('./basis-cash/deployments/deployments.local.json'),
     externalTokens: {
-      TRI: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8', 9],
-      PROPHET: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
-      ETH_TRILP: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
       DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
-      'GSD_DAI-UNI-LPv2': ['0xd4405F0704621DBe9d4dEA60E128E0C3b26bddbD', 18],
-      'GSS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
+      YFI: ['0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e', 18],
+      SUSD: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
+      USDC: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
+      USDT: ['0xdAC17F958D2ee523a2206206994597C13D831ec7', 6],
+      // TODO: replace with real address
+      'BAC_DAI-UNI-LPv2': ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
+      'BAS_DAI-UNI-LPv2': ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18], */
+    chainId: ChainId.ROPSTEN,
+    etherscanUrl: 'https://ropsten.etherscan.io',
+    defaultProvider: 'wss://ropsten.infura.io/ws/v3/d3bcb3c54e8c49a7bd1a9b6773e65bbe',
+    deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
+    externalTokens: {
+      DAI: ['0xbda895A8a258c5EA7A21ED6dE405384B9250Fc28', 18],
+      yCRV: ['0xbda895A8a258c5EA7A21ED6dE405384B9250Fc28', 18],
+      SUSD: ['0xbda895A8a258c5EA7A21ED6dE405384B9250Fc28', 18],
+      USDC: ['0xbda895A8a258c5EA7A21ED6dE405384B9250Fc28', 6],
+      USDT: ['0xbda895A8a258c5EA7A21ED6dE405384B9250Fc28', 6],
+      // TODO: replace with real address
+      'BAC_DAI-UNI-LPv2': ['0x9c7471738B65B2c67ca63F398D037b780fEf74ec', 18],
+      'BAS_DAI-UNI-LPv2': ['0x752125de1C8105aDCfb6BAbE0e1dB3160A7BefE4', 18],
     },
-    baseLaunchDate: new Date('2020-11-29T23:00:00Z'),
-    bondLaunchesAt: new Date('2020-12-05T00:00:00Z'),
-    boardroomLaunchesAt: new Date('2020-12-05T00:00:00Z'),
-    refreshInterval: 30000,
-    gasLimitMultiplier: 1.7,
-    treasuryAllocationDelayInSec: 6 * 86400,
-    // TODO: it should be calculated by subtracting GSD supplies in the Treasury and Boardroom
-    circSupply: '50001',
+    baseLaunchDate: new Date('2020-11-30T00:00:00Z'),
+    bondLaunchesAt: new Date('2020-12-04T00:00:00Z'),
+    boardroomLaunchesAt: new Date('2020-12-04T00:00:00Z'),
   },
 };
 
 export const bankDefinitions: { [contractName: string]: BankInfo } = {
-  GSDDAIPool: {
-    name: 'Earn GSD by DAI',
-    contract: 'GSDDAIPool',
+  BACDAIPool: {
+    name: 'Earn BAC by DAI',
+    contract: 'BACDAIPool',
     depositTokenName: 'DAI',
-    earnTokenName: 'GSD',
-    finished: true,
+    earnTokenName: 'BAC',
     sort: 1,
   },
-  GSDETH_TRILPPool: {
-    name: 'Earn GSD by ETH_TRILP',
-    contract: 'GSDETH_TRILPPool',
-    depositTokenName: 'ETH_TRILP',
-    earnTokenName: 'GSD',
-    finished: true,
+  BACUSDCPool: {
+    name: 'Earn BAC by USDC',
+    contract: 'BACUSDCPool',
+    depositTokenName: 'USDC',
+    earnTokenName: 'BAC',
     sort: 2,
   },
-  GSDPROPHETPool: {
-    name: 'Earn GSD by PROPHET',
-    contract: 'GSDPROPHETPool',
-    depositTokenName: 'PROPHET',
-    earnTokenName: 'GSD',
-    finished: true,
+  BACSUSDPool: {
+    name: 'Earn BAC by sUSD',
+    contract: 'BACSUSDPool',
+    depositTokenName: 'SUSD',
+    earnTokenName: 'BAC',
     sort: 3,
   },
-  GSDTRIPool: {
-    name: 'Earn GSD by TRI',
-    contract: 'GSDTRIPool',
-    depositTokenName: 'TRI',
-    earnTokenName: 'GSD',
-    finished: true,
+  BACUSDTPool: {
+    name: 'Earn BAC by USDT',
+    contract: 'BACUSDTPool',
+    depositTokenName: 'USDT',
+    earnTokenName: 'BAC',
+    sort: 4,
+  },
+  BACyCRVPool: {
+    name: 'Earn BAC by yCRV',
+    contract: 'BACyCRVPool',
+    depositTokenName: 'yCRV',
+    earnTokenName: 'BAC',
     sort: 5,
   },
-  GSDDAILPTokenSharePool: {
-    name: 'Earn GSS by GSD-DAI-LP',
-    contract: 'GSDDAILPTokenSharePool',
-    depositTokenName: 'GSD_DAI-UNI-LPv2',
-    earnTokenName: 'GSS',
-    finished: false,
+  DAIBACLPTokenSharePool: {
+    name: 'Earn BAS by BAC-DAI-LP',
+    contract: 'DAIBACLPTokenSharePool',
+    depositTokenName: 'BAC_DAI-UNI-LPv2',
+    earnTokenName: 'BAS',
     sort: 6,
   },
-  GSSDAILPTokenSharePool: {
-    name: 'Earn GSS by GSS-DAI-LP',
-    contract: 'GSSDAILPTokenSharePool',
-    depositTokenName: 'GSS_DAI-UNI-LPv2',
-    earnTokenName: 'GSS',
-    finished: false,
+  DAIBASLPTokenSharePool: {
+    name: 'Earn BAS by BAS-DAI-LP',
+    contract: 'DAIBASLPTokenSharePool',
+    depositTokenName: 'BAS_DAI-UNI-LPv2',
+    earnTokenName: 'BAS',
     sort: 7,
   },
 };
 
-export default configurations[process.env.NODE_ENV || "development"];
+// export default configurations[process.env.NODE_ENV];
+export default configurations.development;

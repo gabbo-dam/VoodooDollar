@@ -1,15 +1,14 @@
 import { Fetcher, Route, Token } from '@uniswap/sdk';
 import { Configuration } from './config';
 import { ContractName, TokenStat } from './types';
-import { BigNumber, Contract, ethers, Overrides } from 'ethers';
-import { decimalToBalance } from './ether-utils';
+import { BigNumber, Contract, ethers } from 'ethers';
+import { decimalToBalance, web3ProviderFrom } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
 import ERC20 from './ERC20';
 import { getDisplayBalance } from '../utils/formatBalance';
-import { getDefaultProvider } from '../utils/provider';
 
 /**
- * An API module of Gnostic Dollar contracts.
+ * An API module of Basis Cash contracts.
  * All contract-interacting domain logic should be defined in here.
  */
 export class BasisCash {
@@ -19,15 +18,14 @@ export class BasisCash {
   config: Configuration;
   contracts: { [name: string]: Contract };
   externalTokens: { [name: string]: ERC20 };
-  boardroomVersionOfUser?: string;
 
-  GSD: ERC20;
-  GSS: ERC20;
-  GSB: ERC20;
+  BAC: ERC20;
+  BAS: ERC20;
+  BAB: ERC20;
 
   constructor(cfg: Configuration) {
-    const { deployments, externalTokens } = cfg;
-    const provider = getDefaultProvider();
+    const { defaultProvider, deployments, externalTokens } = cfg;
+    const provider = new ethers.providers.Web3Provider(web3ProviderFrom(defaultProvider));
 
     // loads contracts from deployments
     this.contracts = {};
@@ -38,9 +36,9 @@ export class BasisCash {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal
     }
-    this.GSD = new ERC20(deployments.Dollar.address, provider, 'GSD');
-    this.GSS = new ERC20(deployments.Share.address, provider, 'GSS');
-    this.GSB = new ERC20(deployments.Bond.address, provider, 'GSB');
+    this.BAC = new ERC20(deployments.Cash.address, provider, 'BAC');
+    this.BAS = new ERC20(deployments.Share.address, provider, 'BAS');
+    this.BAB = new ERC20(deployments.Bond.address, provider, 'BAB');
 
     this.config = cfg;
     this.provider = provider;
@@ -51,61 +49,29 @@ export class BasisCash {
    * @param account An address of unlocked wallet account.
    */
   unlockWallet(provider: any, account: string) {
-    const newProvider = new ethers.providers.Web3Provider(provider, this.config.chainId);
-
-    this.signer = newProvider.getSigner(0);
+    this.provider = new ethers.providers.Web3Provider(provider);
+    this.signer = this.provider.getSigner(0);
     this.myAccount = account;
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.GSD, this.GSS, this.GSB, ...Object.values(this.externalTokens)];
+    const tokens = [this.BAC, this.BAS, this.BAB, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
-    this.fetchBoardroomVersionOfUser()
-      .then((version) => (this.boardroomVersionOfUser = version))
-      .catch((err) => {
-        console.error(`Failed to fetch boardroom version: ${err.stack}`);
-        this.boardroomVersionOfUser = 'latest';
-      });
   }
 
   get isUnlocked(): boolean {
     return !!this.myAccount;
   }
 
-  gasOptions(gas: BigNumber): Overrides {
-    const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
-    console.log(`⛽️ Gas multiplied: ${gas} -> ${multiplied}`);
-    return {
-      gasLimit: BigNumber.from(multiplied),
-    };
-  }
-
-  /**
-   * @returns Gnostic Dollar (GSD) stats from Uniswap.
-   * It may differ from the GSD price used on Treasury (which is calculated in TWAP)
-   */
-  async getCashStatFromUniswap(): Promise<TokenStat> {
-    const supply = await this.GSD.displayedTotalSupply();
-    return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.GSD),
-      totalSupply: supply,
-    };
-  }
-
-  /**
-   * @returns Gnostic Dollar (GSD) stats from Treasury,
-   * calculated by Time-Weight Averaged Price (TWAP).
-   */
-  async getCashStatFromTreasury(): Promise<TokenStat> {
-    const supply = await this.GSD.displayedTotalSupply();
+  async getCashStat(): Promise<TokenStat> {
     const { Treasury } = this.contracts;
-    const cashPrice: BigNumber = await Treasury.getDollarPrice();
+    const cashPrice: BigNumber = await Treasury.getCashPrice()
     return {
       priceInDAI: getDisplayBalance(cashPrice),
-      totalSupply: supply,
+      totalSupply: await this.BAC.displayedTotalSupply(),
     };
   }
 
@@ -113,24 +79,22 @@ export class BasisCash {
     const { Treasury } = this.contracts;
     const decimals = BigNumber.from(10).pow(18);
 
-    const cashPrice: BigNumber = await Treasury.getDollarPrice();
-    const bondPrice = cashPrice.pow(2).div(decimals);
+    const cashPrice: BigNumber = await Treasury.getCashPrice();
+    const bondPrice = cashPrice.div(decimals).pow(2).mul(decimals);
     return {
       priceInDAI: getDisplayBalance(bondPrice),
-      totalSupply: await this.GSB.displayedTotalSupply(),
+      totalSupply: await this.BAB.displayedTotalSupply(),
     };
   }
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.GSS),
-      totalSupply: await this.GSS.displayedTotalSupply(),
+      priceInDAI: await this.getTokenPriceFromUniswap(this.BAS),
+      totalSupply: await this.BAS.displayedTotalSupply(),
     };
   }
 
   async getTokenPriceFromUniswap(tokenContract: ERC20): Promise<string> {
-    await this.provider.ready;
-
     const { chainId } = this.config;
     const { DAI } = this.config.externalTokens;
 
@@ -174,10 +138,7 @@ export class BasisCash {
     }
   }
 
-  async stakedBalanceOnBank(
-    poolName: ContractName,
-    account = this.myAccount,
-  ): Promise<BigNumber> {
+  async stakedBalanceOnBank(poolName: ContractName, account = this.myAccount): Promise<BigNumber> {
     const pool = this.contracts[poolName];
     try {
       return await pool.balanceOf(account);
@@ -190,25 +151,23 @@ export class BasisCash {
   /**
    * Deposits token to given pool.
    * @param poolName A name of pool contract.
-   * @param amount Number of tokens with decimals applied. (e.g. 1.45 DAI * 10^18)
+   * @param amount Number of tokens. (e.g. 1.45 DAI -> '1.45')
    * @returns {string} Transaction hash
    */
-  async stake(poolName: ContractName, amount: BigNumber): Promise<TransactionResponse> {
+  async stake(poolName: ContractName, amount: string | number): Promise<TransactionResponse> {
     const pool = this.contracts[poolName];
-    const gas = await pool.estimateGas.stake(amount);
-    return await pool.stake(amount, this.gasOptions(gas));
+    return await pool.stake(decimalToBalance(amount));
   }
 
   /**
    * Withdraws token from given pool.
    * @param poolName A name of pool contract.
-   * @param amount Number of tokens with decimals applied. (e.g. 1.45 DAI * 10^18)
+   * @param amount Number of tokens. (e.g. 1.45 DAI -> '1.45')
    * @returns {string} Transaction hash
    */
-  async unstake(poolName: ContractName, amount: BigNumber): Promise<TransactionResponse> {
+  async unstake(poolName: ContractName, amount: string | number): Promise<TransactionResponse> {
     const pool = this.contracts[poolName];
-    const gas = await pool.estimateGas.withdraw(amount);
-    return await pool.withdraw(amount, this.gasOptions(gas));
+    return await pool.withdraw(decimalToBalance(amount));
   }
 
   /**
@@ -216,8 +175,7 @@ export class BasisCash {
    */
   async harvest(poolName: ContractName): Promise<TransactionResponse> {
     const pool = this.contracts[poolName];
-    const gas = await pool.estimateGas.getReward();
-    return await pool.getReward(this.gasOptions(gas));
+    return await pool.getReward();
   }
 
   /**
@@ -225,90 +183,36 @@ export class BasisCash {
    */
   async exit(poolName: ContractName): Promise<TransactionResponse> {
     const pool = this.contracts[poolName];
-    const gas = await pool.estimateGas.exit();
-    return await pool.exit(this.gasOptions(gas));
-  }
-
-  async fetchBoardroomVersionOfUser(): Promise<string> {
-    const { Boardroom1, Boardroom2 } = this.contracts;
-    const balance1 = await Boardroom1.getShareOf(this.myAccount);
-    if (balance1.gt(0)) {
-      console.log(
-        `👀 The user is using Boardroom v1. (Staked ${getDisplayBalance(balance1)} GSS)`,
-      );
-      return 'v1';
-    }
-    // TODO: uncomment after Boardroom3 update
-    // const balance2 = await Boardroom2.getShareOf(this.myAccount);
-    // if (balance2.gt(0)) {
-    //   console.log(`👀 The user is using Boardroom v2. (Staked ${getDisplayBalance(balance2)} GSS)`);
-    //   return 'v2';
-    // }
-    return 'latest';
-  }
-
-  boardroomByVersion(version: string): Contract {
-    if (version === 'v1') {
-      return this.contracts.Boardroom1;
-    }
-    // TODO: uncomment after Boardroom3 update
-    // if (version === 'v2') {
-    //   return this.contracts.Boardroom2;
-    // }
-    // return this.contracts.Boardroom3;
-    return this.contracts.Boardroom2;
-  }
-
-  currentBoardroom(): Contract {
-    if (!this.boardroomVersionOfUser) {
-      throw new Error('you must unlock the wallet to continue.');
-    }
-    return this.boardroomByVersion(this.boardroomVersionOfUser);
-  }
-
-  isOldBoardroomMember(): boolean {
-    return this.boardroomVersionOfUser !== 'latest';
+    return await pool.exit();
   }
 
   async stakeShareToBoardroom(amount: string): Promise<TransactionResponse> {
-    if (this.isOldBoardroomMember()) {
-      throw new Error("you're using old Boardroom. please withdraw and deposit the GSS again.");
-    }
-    const Boardroom = this.currentBoardroom();
+    const { Boardroom } = this.contracts;
     return await Boardroom.stake(decimalToBalance(amount));
   }
 
   async getStakedSharesOnBoardroom(): Promise<BigNumber> {
-    const Boardroom = this.currentBoardroom();
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await Boardroom.getShareOf(this.myAccount);
-    }
-    return await Boardroom.balanceOf(this.myAccount);
+    const { Boardroom } = this.contracts;
+    return await Boardroom.getBoardSeatBalance();
   }
 
   async getEarningsOnBoardroom(): Promise<BigNumber> {
-    const Boardroom = this.currentBoardroom();
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await Boardroom.getCashEarningsOf(this.myAccount);
-    }
-    return await Boardroom.earned(this.myAccount);
+    const { Boardroom } = this.contracts;
+    return await Boardroom.getCashEarningsOf(this.myAccount);
   }
 
   async withdrawShareFromBoardroom(amount: string): Promise<TransactionResponse> {
-    const Boardroom = this.currentBoardroom();
+    const { Boardroom } = this.contracts;
     return await Boardroom.withdraw(decimalToBalance(amount));
   }
 
   async harvestCashFromBoardroom(): Promise<TransactionResponse> {
-    const Boardroom = this.currentBoardroom();
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await Boardroom.claimDividends();
-    }
-    return await Boardroom.claimReward();
+    const { Boardroom } = this.contracts;
+    return await Boardroom.claimDividends();
   }
 
   async exitFromBoardroom(): Promise<TransactionResponse> {
-    const Boardroom = this.currentBoardroom();
+    const { Boardroom } = this.contracts;
     return await Boardroom.exit();
   }
 }

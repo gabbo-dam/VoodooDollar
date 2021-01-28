@@ -10,8 +10,6 @@ import Spacer from '../../Spacer';
 import { isTransactionRecent, useAllTransactions, useClearAllTransactions } from '../../../state/transactions/hooks';
 import { Trash } from 'react-feather';
 
-const MAX_TRANSACTION_HISTORY = 10;
-
 const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const allTransactions = useAllTransactions();
   const { clearAllTransactions } = useClearAllTransactions();
@@ -22,9 +20,7 @@ const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
   }, [allTransactions]);
 
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt);
-  const confirmed = sortedRecentTransactions
-    .filter((tx) => tx.receipt)
-    .slice(0, MAX_TRANSACTION_HISTORY);
+  const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt);
 
   const isEmpty = (confirmed?.length + pending?.length) == 0;
   return (

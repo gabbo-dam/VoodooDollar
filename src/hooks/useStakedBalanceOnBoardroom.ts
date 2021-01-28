@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
-import config from '../config';
 
 const useStakedBalanceOnBoardroom = () => {
   const [balance, setBalance] = useState(BigNumber.from(0));
@@ -15,7 +14,7 @@ const useStakedBalanceOnBoardroom = () => {
     if (basisCash?.isUnlocked) {
       fetchBalance().catch((err) => console.error(err.stack));
 
-      const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
+      const refreshBalance = setInterval(fetchBalance, 10000);
       return () => clearInterval(refreshBalance);
     }
   }, [basisCash?.isUnlocked, setBalance, basisCash]);

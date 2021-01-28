@@ -1,13 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useMemo } from 'react'
+import styled from 'styled-components'
 
-import { useWallet } from 'use-wallet';
+import { useWallet } from 'use-wallet'
 
-import useModal from '../../../hooks/useModal';
+import useModal from '../../../hooks/useModal'
+import { formatAddress } from '../../../utils'
 
-import Button from '../../Button';
+import Button from '../../Button'
 
-import AccountModal from './AccountModal';
+import AccountModal from './AccountModal'
 
 interface AccountButtonProps {}
 

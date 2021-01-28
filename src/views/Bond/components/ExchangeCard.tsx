@@ -79,7 +79,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
           <StyledCardActions>
-            {approveStatus !== ApprovalState.APPROVED && !disabled ? (
+            {approveStatus !== ApprovalState.APPROVED ? (
               <Button
                 disabled={
                   approveStatus == ApprovalState.PENDING ||

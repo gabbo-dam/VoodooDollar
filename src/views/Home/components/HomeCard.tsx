@@ -15,7 +15,7 @@ interface HomeCardProps {
   stat?: TokenStat;
 }
 
-const HomeCard: React.FC<HomeCardProps> = ({ title, symbol, color, address, stat }) => {
+const HomeCard: React.FC<HomeCardProps> = ({ title, symbol, color, address,  stat }) => {
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
     <Wrapper>
@@ -23,18 +23,14 @@ const HomeCard: React.FC<HomeCardProps> = ({ title, symbol, color, address, stat
       <StyledCards>
         <TokenSymbol symbol={symbol} />
         <CardSection>
-          {stat ? (
-            <StyledValue>{(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}</StyledValue>
-          ) : (
-            <ValueSkeleton />
-          )}
+          {stat ? <StyledValue>${stat.priceInDAI}</StyledValue> : <ValueSkeleton />}
           <Label text="Current Price" color={color} />
         </CardSection>
 
         <CardSection>
           {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : <ValueSkeleton />}
-          <StyledSupplyLabel href={tokenUrl} target="_blank" color={color}>
-            Circulating Supply
+          <StyledSupplyLabel href={tokenUrl} color={color}>
+            Total Supply
           </StyledSupplyLabel>
         </CardSection>
       </StyledCards>

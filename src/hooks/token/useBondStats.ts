@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import useBasisCash from './useBasisCash';
-import { TokenStat } from '../basis-cash/types';
-import config from '../config';
+import useBasisCash from '../useBasisCash';
+import { TokenStat } from '../../basis-cash/types';
 
 const useBondStats = () => {
   const [stat, setStat] = useState<TokenStat>();
@@ -12,8 +11,8 @@ const useBondStats = () => {
   }, [basisCash]);
 
   useEffect(() => {
-    fetchBondPrice().catch((err) => console.error(`Failed to fetch GSB price: ${err.stack}`));
-    const refreshInterval = setInterval(fetchBondPrice, config.refreshInterval);
+    fetchBondPrice().catch((err) => console.error(`Failed to fetch BAB price: ${err.stack}`));
+    const refreshInterval = setInterval(fetchBondPrice, 10000);
     return () => clearInterval(refreshInterval);
   }, [setStat, basisCash]);
 
