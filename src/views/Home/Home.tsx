@@ -57,7 +57,7 @@ const Home: React.FC = () => {
         />
         <Spacer size="lg" />
         <HomeCard
-          title={'Gnostic Bonds'}
+          title={'Gnostic Bond'}
           symbol="GSB"
           color="#ECF25C"
           address={bondAddr}
