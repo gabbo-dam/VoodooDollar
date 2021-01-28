@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { UseWalletProvider } from 'use-wallet';
 
 import BanksProvider from './contexts/Banks';
-import BasisCashProvider from './contexts/BasisCashProvider';
+import GnosticDollarProvider from './contexts/GnosticDollarProvider';
 import ModalsProvider from './contexts/Modals';
 
 import Banks from './views/Banks';
@@ -48,7 +48,7 @@ const Providers: React.FC = ({ children }) => {
       <UseWalletProvider chainId={config.chainId}>
         <Provider store={store}>
           <Updaters />
-          <BasisCashProvider>
+          <GnosticDollarProvider>
             <ModalsProvider>
               <BanksProvider>
                 <>
@@ -57,7 +57,7 @@ const Providers: React.FC = ({ children }) => {
                 </>
               </BanksProvider>
             </ModalsProvider>
-          </BasisCashProvider>
+          </GnosticDollarProvider>
         </Provider>
       </UseWalletProvider>
     </ThemeProvider>

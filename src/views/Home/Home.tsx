@@ -5,60 +5,60 @@ import PageHeader from '../../components/PageHeader';
 import Spacer from '../../components/Spacer';
 import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
-import useBasisCash from '../../hooks/useBasisCash';
+import useGnosticDollar from '../../hooks/useGnosticDollar';
 
 const Home: React.FC = () => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
 
-  const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
+  const [{ dollar, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
-    const [cash, bond, share] = await Promise.all([
-      basisCash.getCashStat(),
-      basisCash.getBondStat(),
-      basisCash.getShareStat(),
+    const [dollar, bond, share] = await Promise.all([
+      gnosticDollar.getDollarStat(),
+      gnosticDollar.getBondStat(),
+      gnosticDollar.getShareStat(),
     ]);
-    setStats({ cash, bond, share });
-  }, [basisCash, setStats]);
+    setStats({ dollar, bond, share });
+  }, [gnosticDollar, setStats]);
 
   useEffect(() => {
-    if (basisCash) {
+    if (gnosticDollar) {
       fetchStats()
         .catch(err => console.error(err.stack));
     }
-  }, [basisCash]);
+  }, [gnosticDollar]);
 
-  const cashAddr = useMemo(() => basisCash?.BAC.address, [basisCash]);
-  const shareAddr = useMemo(() => basisCash?.BAS.address, [basisCash]);
-  const bondAddr = useMemo(() => basisCash?.BAB.address, [basisCash]);
+  const dollarAddr = useMemo(() => gnosticDollar?.GSD.address, [gnosticDollar]);
+  const shareAddr = useMemo(() => gnosticDollar?.GSS.address, [gnosticDollar]);
+  const bondAddr = useMemo(() => gnosticDollar?.GSB.address, [gnosticDollar]);
 
   return (
     <Page>
       <PageHeader
         icon="👋"
-        subtitle="Buy, sell, and provide liquidity for Basis Cash and Basis Shares on Uniswap"
-        title="Welcome to Basis Cash!"
+        subtitle="Buy, sell, and provide liquidity for Gnostic Dollar and Gnostic Shares on Uniswap"
+        title="Welcome to Gnostic Dollar!"
       />
       <Spacer />
       <CardWrapper>
         <HomeCard
-          title={'Basis Cash'}
-          symbol="BAC"
+          title={'Gnostic Dollar'}
+          symbol="GSD"
           color="#EEA7ED"
-          address={cashAddr}
-          stat={cash}
+          address={dollarAddr}
+          stat={dollar}
         />
         <Spacer size="lg" />
         <HomeCard
-          title={'Basis Share'}
-          symbol="BAS"
+          title={'Gnostic Share'}
+          symbol="GSS"
           color="#E83725"
           address={shareAddr}
           stat={share}
         />
         <Spacer size="lg" />
         <HomeCard
-          title={'Basis Bonds'}
-          symbol="BAB"
+          title={'Gnostic Bonds'}
+          symbol="GSB"
           color="#ECF25C"
           address={bondAddr}
           stat={bond}

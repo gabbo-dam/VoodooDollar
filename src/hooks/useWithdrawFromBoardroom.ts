@@ -1,22 +1,22 @@
 import { useCallback } from 'react';
-import useBasisCash from './useBasisCash';
-import { Bank } from '../basis-cash';
+import useGnosticDollar from './useGnosticDollar';
+import { Bank } from '../gnostic-dollar';
 import { useTransactionAdder } from '../state/transactions/hooks';
 import { BigNumber } from 'ethers';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useWithdrawFromBoardroom = () => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleWithdraw = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        basisCash.withdrawShareFromBoardroom(amount),
-        `Withdraw ${amount} BAS from the boardroom`,
+        gnosticDollar.withdrawShareFromBoardroom(amount),
+        `Withdraw ${amount} GSS from the boardroom`,
       );
     },
-    [basisCash],
+    [gnosticDollar],
   );
   return { onWithdraw: handleWithdraw };
 };

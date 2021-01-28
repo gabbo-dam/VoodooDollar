@@ -2,21 +2,21 @@ import { useCallback, useEffect, useState } from 'react';
 import useGnosticDollar from '../useGnosticDollar';
 import { TokenStat } from '../../gnostic-dollar/types';
 
-const useBondStats = () => {
+const useDollarStats = () => {
   const [stat, setStat] = useState<TokenStat>();
   const gnosticDollar = useGnosticDollar();
 
-  const fetchBondPrice = useCallback(async () => {
-    setStat(await gnosticDollar.getBondStat());
+  const fetchDollarPrice = useCallback(async () => {
+    setStat(await gnosticDollar.getDollarStat());
   }, [gnosticDollar]);
 
   useEffect(() => {
-    fetchBondPrice().catch((err) => console.error(`Failed to fetch GSB price: ${err.stack}`));
-    const refreshInterval = setInterval(fetchBondPrice, 10000);
+    fetchDollarPrice().catch((err) => console.error(`Failed to fetch GSB price: ${err.stack}`));
+    const refreshInterval = setInterval(fetchDollarPrice, 10000);
     return () => clearInterval(refreshInterval);
   }, [setStat, gnosticDollar]);
 
   return stat;
 };
 
-export default useBondStats;
+export default useDollarStats;

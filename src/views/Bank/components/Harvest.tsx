@@ -15,7 +15,7 @@ import useHarvest from '../../../hooks/useHarvest';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { Bank } from '../../../basis-cash';
+import { Bank } from '../../../gnostic-dollar';
 
 interface HarvestProps {
   bank: Bank;
@@ -25,7 +25,7 @@ const Harvest: React.FC<HarvestProps> = ({ bank }) => {
   const earnings = useEarnings(bank.contract);
   const { onReward } = useHarvest(bank);
 
-  const tokenName = bank.earnTokenName === 'BAS' ? 'Share' : 'Cash';
+  const tokenName = bank.earnTokenName === 'GSS' ? 'Share' : 'Dollar';
   return (
     <Card>
       <CardContent>
@@ -35,7 +35,7 @@ const Harvest: React.FC<HarvestProps> = ({ bank }) => {
               <TokenSymbol symbol={bank.earnToken.symbol} />
             </CardIcon>
             <Value value={getDisplayBalance(earnings)} />
-            <Label text={`Basis ${tokenName} Earned`} />
+            <Label text={`Gnostic ${tokenName} Earned`} />
           </StyledCardHeader>
           <StyledCardActions>
             <Button onClick={onReward} disabled={earnings.eq(0)} text="Settle"  />

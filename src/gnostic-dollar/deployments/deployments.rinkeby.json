@@ -1,6 +1,6 @@
 {
   "Dollar": {
-    "address": "0x7a5996FCCE3a2b369347637Ee4D8BbE5de7d3CD2",
+    "address": "0xEA56e4232cb5743Ae3Fb56f1093D2b39cb1dac09",
     "abi": [
       {
         "inputs": [],
@@ -454,7 +454,7 @@
     ]
   },
   "Bond": {
-    "address": "0x1564e700a27E2A0B88b410d2C1337E256ac00475",
+    "address": "0x2FCd586913f380d92Ea1A339c0117850221f341a",
     "abi": [
       {
         "inputs": [],
@@ -908,7 +908,7 @@
     ]
   },
   "Share": {
-    "address": "0xc9F584642D7B6e0522cfCc38b393bAf669d7F1b5",
+    "address": "0xeE5D90622BCFcF026f3646AbA2801ee2B4b18A20",
     "abi": [
       {
         "inputs": [],
@@ -1362,7 +1362,7 @@
     ]
   },
   "Boardroom": {
-    "address": "0x4CD7513306A6C1c92cBCdc969f0818b809b080FD",
+    "address": "0x2b31673e975a770870bF43b11Ddb300b74168C1d",
     "abi": [
       {
         "inputs": [
@@ -1565,8 +1565,34 @@
         "type": "function"
       },
       {
-        "inputs": [],
-        "name": "getDollarEarnings",
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "director",
+            "type": "address"
+          }
+        ],
+        "name": "getShareOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "director",
+            "type": "address"
+          }
+        ],
+        "name": "getDollarEarningsOf",
         "outputs": [
           {
             "internalType": "uint256",
@@ -1601,7 +1627,7 @@
     ]
   },
   "Treasury": {
-    "address": "0x3Cdc3Af5b00ac609835C739CC230a8b024c8A1d6",
+    "address": "0xC399BCCdd82c3eF1fbfb50f1c2A405e3bB997567",
     "abi": [
       {
         "inputs": [
@@ -1847,6 +1873,20 @@
         "type": "function"
       },
       {
+        "inputs": [],
+        "name": "getDollarPrice",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "cashPrice",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+      },
+      {
         "inputs": [
           {
             "internalType": "uint256",
@@ -1882,7 +1922,7 @@
     ]
   },
   "GSDETHTRILPPool": {
-    "address": "0x3B6c49Bd2bA6D04771cEcC012408e9d9df482b27",
+    "address": "0x5569Ab0E840d5955A109E7928c3cf1dbCf3AC388",
     "abi": [
       {
         "inputs": [
@@ -2360,7 +2400,7 @@
     ]
   },
   "GSDDAILPTokenSharePool": {
-    "address": "0xbA78E3E95D31ED214A4B4438bC6888e76505c5b8",
+    "address": "0xD7d67caA9330D205b5bF5D0e119670Bb7dC6EF9a",
     "abi": [
       {
         "inputs": [
@@ -2838,7 +2878,7 @@
     ]
   },
   "GSDDAIPool": {
-    "address": "0xCE34FaA150355d4CAf795A5c0E43A7d5f60B19c8",
+    "address": "0x9fAf3d4998379DE46eaA61303ed6FB1536e265C6",
     "abi": [
       {
         "inputs": [
@@ -3316,7 +3356,7 @@
     ]
   },
   "GSDPROPHETPool": {
-    "address": "0x5333195fC7a40E016B5EBEd80B59E967bAc88B90",
+    "address": "0x5eed47e1D4b87FC89949ae1A3E503a91936260Ca",
     "abi": [
       {
         "inputs": [
@@ -3794,7 +3834,7 @@
     ]
   },
   "GSDTRIPool": {
-    "address": "0xF141BEBab16Cb4070F09DeA0E03F24d7b0432Db6",
+    "address": "0x77Df70E73E9D23E5F616466388233597B8dDAeDB",
     "abi": [
       {
         "inputs": [
@@ -4272,7 +4312,7 @@
     ]
   },
   "GSSDAILPTokenSharePool": {
-    "address": "0x9eeed9072c9CE173Dfa0644c7110E431B4EE0d44",
+    "address": "0xd5228b6AbA421EBB7EFCEf6d7f2d457fa5B5e690",
     "abi": [
       {
         "inputs": [

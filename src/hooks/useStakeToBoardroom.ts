@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
-import useBasisCash from './useBasisCash';
+import useGnosticDollar from './useGnosticDollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useStakeToBoardroom = () => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleStake = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        basisCash.stakeShareToBoardroom(amount),
-        `Stake ${amount} BAS to the boardroom`,
+        gnosticDollar.stakeShareToBoardroom(amount),
+        `Stake ${amount} GSS to the boardroom`,
       );
     },
-    [basisCash],
+    [gnosticDollar],
   );
   return { onStake: handleStake };
 };

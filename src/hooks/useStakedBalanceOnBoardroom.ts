@@ -1,23 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useBasisCash from './useBasisCash';
+import useGnosticDollar from './useGnosticDollar';
 
 const useStakedBalanceOnBoardroom = () => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getStakedSharesOnBoardroom());
-  }, [basisCash?.isUnlocked]);
+    setBalance(await gnosticDollar.getStakedSharesOnBoardroom());
+  }, [gnosticDollar?.isUnlocked]);
 
   useEffect(() => {
-    if (basisCash?.isUnlocked) {
+    if (gnosticDollar?.isUnlocked) {
       fetchBalance().catch((err) => console.error(err.stack));
 
       const refreshBalance = setInterval(fetchBalance, 10000);
       return () => clearInterval(refreshBalance);
     }
-  }, [basisCash?.isUnlocked, setBalance, basisCash]);
+  }, [gnosticDollar?.isUnlocked, setBalance, gnosticDollar]);
 
   return balance;
 };

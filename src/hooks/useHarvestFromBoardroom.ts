@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
-import useBasisCash from './useBasisCash';
+import useGnosticDollar from './useGnosticDollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useHarvestFromBoardroom = () => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleReward = useCallback(() => {
-    handleTransactionReceipt(basisCash.harvestCashFromBoardroom(), 'Claim BAC from Boardroom');
-  }, [basisCash]);
+    handleTransactionReceipt(gnosticDollar.harvestDollarFromBoardroom(), 'Claim GSD from Boardroom');
+  }, [gnosticDollar]);
 
   return { onReward: handleReward };
 };

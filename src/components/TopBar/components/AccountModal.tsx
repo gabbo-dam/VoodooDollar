@@ -7,19 +7,19 @@ import Button from '../../Button';
 import Label from '../../Label';
 import Modal, { ModalProps } from '../../Modal';
 import ModalTitle from '../../ModalTitle';
-import useBasisCash from '../../../hooks/useBasisCash';
+import useGnosticDollar from '../../../hooks/useGnosticDollar';
 import TokenSymbol from '../../TokenSymbol';
 
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
 
-  const bacBalance = useTokenBalance(basisCash.BAC);
+  const bacBalance = useTokenBalance(gnosticDollar.GSD);
   const displayBacBalance = useMemo(() => getDisplayBalance(bacBalance), [bacBalance]);
 
-  const basBalance = useTokenBalance(basisCash.BAS);
+  const basBalance = useTokenBalance(gnosticDollar.GSS);
   const displayBasBalance = useMemo(() => getDisplayBalance(basBalance), [basBalance]);
 
-  const babBalance = useTokenBalance(basisCash.BAB);
+  const babBalance = useTokenBalance(gnosticDollar.GSB);
   const displayBabBalance = useMemo(() => getDisplayBalance(babBalance), [babBalance]);
 
   return (
@@ -28,26 +28,26 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="BAC" />
+          <TokenSymbol symbol="GSD" />
           <StyledBalance>
             <StyledValue>{displayBacBalance}</StyledValue>
-            <Label text="BAC Available" />
+            <Label text="GSD Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="BAS" />
+          <TokenSymbol symbol="GSS" />
           <StyledBalance>
             <StyledValue>{displayBasBalance}</StyledValue>
-            <Label text="BAS Available" />
+            <Label text="GSS Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="BAB" />
+          <TokenSymbol symbol="GSB" />
           <StyledBalance>
             <StyledValue>{displayBabBalance}</StyledValue>
-            <Label text="BAB Available" />
+            <Label text="GSB Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>

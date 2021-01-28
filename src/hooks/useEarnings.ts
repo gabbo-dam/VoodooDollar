@@ -1,25 +1,25 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useBasisCash from './useBasisCash';
-import { ContractName } from '../basis-cash';
+import useGnosticDollar from './useGnosticDollar';
+import { ContractName } from '../gnostic-dollar';
 
 const useEarnings = (poolName: ContractName) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
 
   const fetchBalance = useCallback(async () => {
-    const balance = await basisCash.earnedFromBank(poolName, basisCash.myAccount);
+    const balance = await gnosticDollar.earnedFromBank(poolName, gnosticDollar.myAccount);
     setBalance(balance);
-  }, [basisCash?.isUnlocked, poolName]);
+  }, [gnosticDollar?.isUnlocked, poolName]);
 
   useEffect(() => {
-    if (basisCash?.isUnlocked) {
+    if (gnosticDollar?.isUnlocked) {
       fetchBalance().catch((err) => console.error(err.stack));
 
       const refreshBalance = setInterval(fetchBalance, 10000);
       return () => clearInterval(refreshBalance);
     }
-  }, [basisCash?.isUnlocked, poolName, basisCash]);
+  }, [gnosticDollar?.isUnlocked, poolName, gnosticDollar]);
 
   return balance;
 };

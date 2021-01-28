@@ -8,10 +8,10 @@ import ERC20 from './ERC20';
 import { getDisplayBalance } from '../utils/formatBalance';
 
 /**
- * An API module of Basis Cash contracts.
+ * An API module of Gnostic Dollar contracts.
  * All contract-interacting domain logic should be defined in here.
  */
-export class BasisCash {
+export class GnosticDollar {
   myAccount: string;
   provider: ethers.providers.Web3Provider;
   signer?: ethers.Signer;
@@ -19,9 +19,9 @@ export class BasisCash {
   contracts: { [name: string]: Contract };
   externalTokens: { [name: string]: ERC20 };
 
-  BAC: ERC20;
-  BAS: ERC20;
-  BAB: ERC20;
+  GSD: ERC20;
+  GSS: ERC20;
+  GSB: ERC20;
 
   constructor(cfg: Configuration) {
     const { defaultProvider, deployments, externalTokens } = cfg;
@@ -36,9 +36,9 @@ export class BasisCash {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal
     }
-    this.BAC = new ERC20(deployments.Cash.address, provider, 'BAC');
-    this.BAS = new ERC20(deployments.Share.address, provider, 'BAS');
-    this.BAB = new ERC20(deployments.Bond.address, provider, 'BAB');
+    this.GSD = new ERC20(deployments.Dollar.address, provider, 'GSD');
+    this.GSS = new ERC20(deployments.Share.address, provider, 'GSS');
+    this.GSB = new ERC20(deployments.Bond.address, provider, 'GSB');
 
     this.config = cfg;
     this.provider = provider;
@@ -55,7 +55,7 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.BAC, this.BAS, this.BAB, ...Object.values(this.externalTokens)];
+    const tokens = [this.GSD, this.GSS, this.GSB, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -66,12 +66,12 @@ export class BasisCash {
     return !!this.myAccount;
   }
 
-  async getCashStat(): Promise<TokenStat> {
+  async getDollarStat(): Promise<TokenStat> {
     const { Treasury } = this.contracts;
-    const cashPrice: BigNumber = await Treasury.getCashPrice()
+    const dollarPrice: BigNumber = await Treasury.getDollarPrice();
     return {
-      priceInDAI: getDisplayBalance(cashPrice),
-      totalSupply: await this.BAC.displayedTotalSupply(),
+      priceInDAI: getDisplayBalance(dollarPrice),
+      totalSupply: await this.GSD.displayedTotalSupply(),
     };
   }
 
@@ -79,18 +79,18 @@ export class BasisCash {
     const { Treasury } = this.contracts;
     const decimals = BigNumber.from(10).pow(18);
 
-    const cashPrice: BigNumber = await Treasury.getCashPrice();
-    const bondPrice = cashPrice.div(decimals).pow(2).mul(decimals);
+    const dollarPrice: BigNumber = await Treasury.getDollarPrice();
+    const bondPrice = dollarPrice.div(decimals).pow(2).mul(decimals);
     return {
       priceInDAI: getDisplayBalance(bondPrice),
-      totalSupply: await this.BAB.displayedTotalSupply(),
+      totalSupply: await this.GSB.displayedTotalSupply(),
     };
   }
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.BAS),
-      totalSupply: await this.BAS.displayedTotalSupply(),
+      priceInDAI: await this.getTokenPriceFromUniswap(this.GSS),
+      totalSupply: await this.GSS.displayedTotalSupply(),
     };
   }
 
@@ -111,8 +111,8 @@ export class BasisCash {
   }
 
   /**
-   * Buy bonds with cash.
-   * @param amount amount of cash to purchase bonds with.
+   * Buy bonds with dollar.
+   * @param amount amount of dollar to purchase bonds with.
    */
   async buyBonds(amount: string | number): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
@@ -120,7 +120,7 @@ export class BasisCash {
   }
 
   /**
-   * Redeem bonds for cash.
+   * Redeem bonds for dollar.
    * @param amount amount of bonds to redeem.
    */
   async redeemBonds(amount: string): Promise<TransactionResponse> {
@@ -198,7 +198,7 @@ export class BasisCash {
 
   async getEarningsOnBoardroom(): Promise<BigNumber> {
     const { Boardroom } = this.contracts;
-    return await Boardroom.getCashEarningsOf(this.myAccount);
+    return await Boardroom.getDollarEarningsOf(this.myAccount);
   }
 
   async withdrawShareFromBoardroom(amount: string): Promise<TransactionResponse> {
@@ -206,7 +206,7 @@ export class BasisCash {
     return await Boardroom.withdraw(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(): Promise<TransactionResponse> {
+  async harvestDollarFromBoardroom(): Promise<TransactionResponse> {
     const { Boardroom } = this.contracts;
     return await Boardroom.claimDividends();
   }

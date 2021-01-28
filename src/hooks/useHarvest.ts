@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
-import useBasisCash from './useBasisCash';
+import useGnosticDollar from './useGnosticDollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
-import { Bank } from '../basis-cash';
+import { Bank } from '../gnostic-dollar';
 
 const useHarvest = (bank: Bank) => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleReward = useCallback(() => {
     handleTransactionReceipt(
-      basisCash.harvest(bank.contract),
+      gnosticDollar.harvest(bank.contract),
       `Claim ${bank.earnTokenName} from ${bank.contract}`,
     );
-  }, [bank, basisCash]);
+  }, [bank, gnosticDollar]);
 
   return { onReward: handleReward };
 };

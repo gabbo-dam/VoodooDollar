@@ -9,40 +9,40 @@ import ExchangeCard from './components/ExchangeCard';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
 import useBondStats from '../../hooks/token/useBondStats';
-import useBasisCash from '../../hooks/useBasisCash';
+import useGnosticDollar from '../../hooks/useGnosticDollar';
 import { useTransactionAdder } from '../../state/transactions/hooks';
-import useCashStats from '../../hooks/token/useCashStats';
+import useDollarStats from '../../hooks/token/useDollarStats';
 import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
   const { account, connect } = useWallet();
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const addTransaction = useTransactionAdder();
   const bondStat = useBondStats();
-  const cashStat = useCashStats();
+  const dollarStat = useDollarStats();
 
   const handleBuyBonds = useCallback(
     async (amount: string) => {
-      const tx = await basisCash.buyBonds(amount);
-      const bondAmount = Number(amount) / Number(cashStat.priceInDAI);
+      const tx = await gnosticDollar.buyBonds(amount);
+      const bondAmount = Number(amount) / Number(dollarStat.priceInDAI);
       addTransaction(tx, {
-        summary: `Buy ${bondAmount.toFixed(2)} BAB with ${amount} BAC`,
+        summary: `Buy ${bondAmount.toFixed(2)} GSB with ${amount} GSD`,
       });
     },
-    [basisCash, addTransaction, cashStat],
+    [gnosticDollar, addTransaction, dollarStat],
   );
 
   const handleRedeemBonds = useCallback(
     async (amount: string) => {
-      const tx = await basisCash.redeemBonds(amount);
-      addTransaction(tx, { summary: `Redeem ${amount} BAB` });
+      const tx = await gnosticDollar.redeemBonds(amount);
+      addTransaction(tx, { summary: `Redeem ${amount} GSB` });
     },
-    [basisCash, addTransaction],
+    [gnosticDollar, addTransaction],
   );
-  const cashIsOverpriced = useMemo(() => Number(cashStat?.priceInDAI) > 1.0, [cashStat]);
-  const cashIsUnderPriced = useMemo(() => Number(cashStat?.priceInDAI) < 1.0, [cashStat]);
+  const dollarIsOverpriced = useMemo(() => Number(dollarStat?.priceInDAI) > 1.0, [dollarStat]);
+  const dollarIsUnderPriced = useMemo(() => Number(dollarStat?.priceInDAI) < 1.0, [dollarStat]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt;
   if (!isLaunched) {
@@ -56,8 +56,8 @@ const Bond: React.FC = () => {
           />
           <LaunchCountdown
             deadline={config.bondLaunchesAt}
-            description="How does Basis bonds work?"
-            descriptionLink="https://medium.com/basis-cash#TODO"
+            description="How does Gnostic bonds work?"
+            descriptionLink="https://medium.com/gnostic-dollar#TODO"
           />
         </Page>
       </Switch>
@@ -79,26 +79,26 @@ const Bond: React.FC = () => {
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Purchase"
-                  fromToken={basisCash.BAC}
-                  fromTokenName="Basis Cash"
-                  toToken={basisCash.BAB}
-                  toTokenName="Basis Bond"
-                  priceDesc={`BAB Price: ${!bondStat ? '-' : '$' + bondStat.priceInDAI}`}
+                  fromToken={gnosticDollar.GSD}
+                  fromTokenName="Gnostic Dollar"
+                  toToken={gnosticDollar.GSB}
+                  toTokenName="Gnostic Bond"
+                  priceDesc={`GSB Price: ${!bondStat ? '-' : '$' + bondStat.priceInDAI}`}
                   onExchange={handleBuyBonds}
-                  disabled={!bondStat || cashIsOverpriced}
+                  disabled={!bondStat || dollarIsOverpriced}
                 />
               </StyledCardWrapper>
               <Spacer size="lg" />
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Redeem"
-                  fromToken={basisCash.BAB}
-                  fromTokenName="Basis Bond"
-                  toToken={basisCash.BAC}
-                  toTokenName="Basis Cash"
-                  priceDesc="1 BAB = 1 BAC"
+                  fromToken={gnosticDollar.GSB}
+                  fromTokenName="Gnostic Bond"
+                  toToken={gnosticDollar.GSD}
+                  toTokenName="Gnostic Dollar"
+                  priceDesc="1 GSB = 1 GSD"
                   onExchange={handleRedeemBonds}
-                  disabled={!bondStat || cashIsUnderPriced}
+                  disabled={!bondStat || dollarIsUnderPriced}
                 />
               </StyledCardWrapper>
             </StyledBond>

@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
   return (
     <StyledLogo>
       <img src={farmer} height="32" style={{ marginTop: -4 }} />
-      <StyledLink href="/">Basis Cash</StyledLink>
+      <StyledLink href="/">Gnostic Dollar</StyledLink>
     </StyledLogo>
   );
 };

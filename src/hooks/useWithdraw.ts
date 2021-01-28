@@ -1,20 +1,20 @@
 import { useCallback } from 'react';
-import useBasisCash from './useBasisCash';
-import { Bank } from '../basis-cash';
+import useGnosticDollar from './useGnosticDollar';
+import { Bank } from '../gnostic-dollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useWithdraw = (bank: Bank) => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleWithdraw = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        basisCash.unstake(bank.contract, amount),
+        gnosticDollar.unstake(bank.contract, amount),
         `Withdraw ${amount} ${bank.depositTokenName} from ${bank.contract}`,
       );
     },
-    [bank, basisCash],
+    [bank, gnosticDollar],
   );
   return { onWithdraw: handleWithdraw };
 };

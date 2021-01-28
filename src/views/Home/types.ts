@@ -1,7 +1,7 @@
-import { TokenStat } from '../../basis-cash/types';
+import { TokenStat } from '../../gnostic-dollar/types';
 
 export interface OverviewData {
-  cash?: TokenStat;
+  dollar?: TokenStat;
   bond?: TokenStat;
   share?: TokenStat;
 }

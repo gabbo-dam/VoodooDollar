@@ -22,7 +22,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { Bank } from '../../../basis-cash';
+import { Bank } from '../../../gnostic-dollar';
 
 interface StakeProps {
   bank: Bank;
@@ -82,11 +82,12 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
                   <RemoveIcon />
                 </IconButton>
                 <StyledActionSpacer />
-                {bank.depositTokenName !== 'YCRV_YAM_UNI_LP' && (
-                  <IconButton onClick={onPresentDeposit}>
-                    <AddIcon />
-                  </IconButton>
-                )}
+                <IconButton
+                  disabled={bank.finished}
+                  onClick={() => (bank.finished ? null : onPresentDeposit())}
+                >
+                  <AddIcon />
+                </IconButton>
               </>
             )}
           </StyledCardActions>

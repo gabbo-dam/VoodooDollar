@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
-import useBasisCash from './useBasisCash';
+import useGnosticDollar from './useGnosticDollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useRedeemOnBoardroom = () => {
-  const basisCash = useBasisCash();
+  const gnosticDollar = useGnosticDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleRedeem = useCallback(() => {
-    handleTransactionReceipt(basisCash.exitFromBoardroom(), 'Redeem BAS from Boardroom');
-  }, [basisCash]);
+    handleTransactionReceipt(gnosticDollar.exitFromBoardroom(), 'Redeem GSS from Boardroom');
+  }, [gnosticDollar]);
   return { onRedeem: handleRedeem };
 };
 

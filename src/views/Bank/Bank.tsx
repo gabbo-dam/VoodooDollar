@@ -12,7 +12,7 @@ import Stake from './components/Stake';
 
 import useBank from '../../hooks/useBank';
 import useRedeem from '../../hooks/useRedeem';
-import { Bank as BankEntity } from '../../basis-cash';
+import { Bank as BankEntity } from '../../gnostic-dollar';
 
 const Bank: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -59,11 +59,11 @@ const Bank: React.FC = () => {
 const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   let pairName: string;
   let uniswapUrl: string;
-  if (bank.depositTokenName.includes('BAC')) {
-    pairName = 'BAC-DAI pair';
+  if (bank.depositTokenName.includes('GSD')) {
+    pairName = 'GSD-DAI pair';
     uniswapUrl = 'https://medium.com/@basiscash/#bac-dai';
   } else {
-    pairName = 'BAS-DAI pair';
+    pairName = 'GSS-DAI pair';
     uniswapUrl = 'https://medium.com/@basiscash/#bas-dai';
   }
   return (
