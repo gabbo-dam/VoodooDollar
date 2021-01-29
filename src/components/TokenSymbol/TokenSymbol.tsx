@@ -13,9 +13,8 @@ const logosBySymbol: {[title: string]: string} = {
   'GSB': gsbLogo,
   'GSS': gssLogo,
   'DAI': DAILogo,
-  'TRI-ETH': sUSDLogo,
-  'TRI': USDCLogo,
-  'PROPHET': USDTLogo,
+  'ETH_TRI-UNI-LPv2': sUSDLogo,
+  'USDx': USDCLogo,
   'GSD_DAI-UNI-LPv2': gsdLogo,
   'GSS_DAI-UNI-LPv2': gssLogo,
 };
