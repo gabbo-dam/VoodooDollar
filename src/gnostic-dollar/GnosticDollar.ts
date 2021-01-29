@@ -154,9 +154,9 @@ export class GnosticDollar {
    * @param amount Number of tokens. (e.g. 1.45 DAI -> '1.45')
    * @returns {string} Transaction hash
    */
-  async stake(poolName: ContractName, amount: string | number): Promise<TransactionResponse> {
+  async stake(poolName: ContractName, amount: string | number, decimals: string | number): Promise<TransactionResponse> {
     const pool = this.contracts[poolName];
-    return await pool.stake(decimalToBalance(amount));
+    return await pool.stake(BigNumber.from(`${Number(amount) * 10 ** Number(decimals)}`));
   }
 
   /**

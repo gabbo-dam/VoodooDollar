@@ -9,10 +9,8 @@ const useStake = (bank: Bank) => {
 
   const handleStake = useCallback(
     (amount: string) => {
-      console.log('bank :>> ', bank);
-      console.log('amount :>> ', amount);
       handleTransactionReceipt(
-        gnosticDollar.stake(bank.contract, amount),
+        gnosticDollar.stake(bank.contract, amount, bank.depositToken.decimal),
         `Stake ${amount} ${bank.depositTokenName} to ${bank.contract}`,
       );
     },
