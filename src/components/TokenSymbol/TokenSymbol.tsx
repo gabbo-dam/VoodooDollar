@@ -1,32 +1,32 @@
 import React from 'react';
 
-import gsdLogo from '../../assets/img/basis-cash-logo.svg';
-import gssLogo from '../../assets/img/basis-share-logo.svg';
-import gsbLogo from '../../assets/img/basis-bond-logo.svg';
+import vddLogo from '../../assets/img/basis-cash-logo.svg';
+import vdsLogo from '../../assets/img/basis-share-logo.svg';
+import vdbLogo from '../../assets/img/basis-bond-logo.svg';
 import DAILogo from '../../assets/img/DAI.png';
 import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
 
 const logosBySymbol: {[title: string]: string} = {
-  'GSD': gsdLogo,
-  'GSB': gsbLogo,
-  'GSS': gssLogo,
+  'VDD': vddLogo,
+  'VDB': vdbLogo,
+  'VDS': vdsLogo,
   'DAI': DAILogo,
   'ETH_TRI-UNI-LPv2': sUSDLogo,
   'USDx': USDCLogo,
-  'GSD_DAI-UNI-LPv2': gsdLogo,
-  'GSS_DAI-UNI-LPv2': gssLogo,
+  'VDD_DAI-UNI-LPv2': vddLogo,
+  'VDS_DAI-UNI-LPv2': vdsLogo,
 };
 
-type GnosticLogoProps = {
+type VoodooLogoProps = {
   symbol: string;
   size?: number;
 }
 
-const TokenSymbol: React.FC<GnosticLogoProps> = ({ symbol, size = 64 }) => {
+const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
   if (!logosBySymbol[symbol]) {
-    throw new Error(`Invalid GnosticLogo symbol: ${symbol}`);
+    throw new Error(`Invalid VoodooLogo symbol: ${symbol}`);
   }
   return (
     <img

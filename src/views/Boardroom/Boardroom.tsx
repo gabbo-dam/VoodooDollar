@@ -29,12 +29,12 @@ const Boardroom: React.FC = () => {
           <PageHeader
             icon={'🤝'}
             title="Join the Boardroom"
-            subtitle="Deposit Gnostic Shares and earn inflationary rewards"
+            subtitle="Deposit Voodoo Shares and earn inflationary rewards"
           />
           <LaunchCountdown
             deadline={config.boardroomLaunchesAt}
             description="How does the boardroom work?"
-            descriptionLink="https://medium.com/gnostic-dollar#TODO"
+            descriptionLink="https://medium.com/voodoo-dollar#TODO"
           />
         </Page>
       </Switch>
@@ -49,7 +49,7 @@ const Boardroom: React.FC = () => {
             <PageHeader
               icon={'🤝'}
               title="Join the Boardroom"
-              subtitle="Deposit Gnostic Shares and earn inflationary rewards"
+              subtitle="Deposit Voodoo Shares and earn inflationary rewards"
             />
             <StyledBoardroom>
               <StyledCardsWrapper>

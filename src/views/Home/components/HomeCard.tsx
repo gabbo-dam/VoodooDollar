@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import Label from '../../../components/Label';
-import { TokenStat } from '../../../gnostic-dollar/types';
+import { TokenStat } from '../../../voodoo-dollar/types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';

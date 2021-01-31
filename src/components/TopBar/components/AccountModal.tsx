@@ -7,19 +7,19 @@ import Button from '../../Button';
 import Label from '../../Label';
 import Modal, { ModalProps } from '../../Modal';
 import ModalTitle from '../../ModalTitle';
-import useGnosticDollar from '../../../hooks/useGnosticDollar';
+import useVoodooDollar from '../../../hooks/useVoodooDollar';
 import TokenSymbol from '../../TokenSymbol';
 
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
 
-  const bacBalance = useTokenBalance(gnosticDollar.GSD);
+  const bacBalance = useTokenBalance(voodooDollar.VDD);
   const displayBacBalance = useMemo(() => getDisplayBalance(bacBalance), [bacBalance]);
 
-  const basBalance = useTokenBalance(gnosticDollar.GSS);
+  const basBalance = useTokenBalance(voodooDollar.VDS);
   const displayBasBalance = useMemo(() => getDisplayBalance(basBalance), [basBalance]);
 
-  const babBalance = useTokenBalance(gnosticDollar.GSB);
+  const babBalance = useTokenBalance(voodooDollar.VDB);
   const displayBabBalance = useMemo(() => getDisplayBalance(babBalance), [babBalance]);
 
   return (
@@ -28,26 +28,26 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="GSD" />
+          <TokenSymbol symbol="VDD" />
           <StyledBalance>
             <StyledValue>{displayBacBalance}</StyledValue>
-            <Label text="GSD Available" />
+            <Label text="VDD Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="GSS" />
+          <TokenSymbol symbol="VDS" />
           <StyledBalance>
             <StyledValue>{displayBasBalance}</StyledValue>
-            <Label text="GSS Available" />
+            <Label text="VDS Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="GSB" />
+          <TokenSymbol symbol="VDB" />
           <StyledBalance>
             <StyledValue>{displayBabBalance}</StyledValue>
-            <Label text="GSB Available" />
+            <Label text="VDB Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>

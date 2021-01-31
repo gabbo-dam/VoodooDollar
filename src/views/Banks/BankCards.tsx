@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import styled from 'styled-components';
 
-import { Bank } from '../../gnostic-dollar';
+import { Bank } from '../../voodoo-dollar';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import CardContent from '../../components/CardContent';
@@ -96,7 +96,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
   return (
     <StyledCardWrapper>
       {bank.depositTokenName.includes('LP') &&
-        (bank.depositTokenName.includes('GSS_DAI') ? (
+        (bank.depositTokenName.includes('VDS_DAI') ? (
           <StyledCardSuperAccent />
         ) : (
           <StyledCardAccent />
@@ -110,7 +110,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
             <StyledTitle>{bank.name}</StyledTitle>
             <StyledDetails>
               <StyledDetail>Deposit {bank.depositTokenName.toUpperCase()}</StyledDetail>
-              <StyledDetail>Earn {`Gnostic ${bank.earnTokenName}`}</StyledDetail>
+              <StyledDetail>Earn {`Voodoo ${bank.earnTokenName}`}</StyledDetail>
             </StyledDetails>
             <Button text="Select" to={`/bank/${bank.contract}`} />
           </StyledContent>

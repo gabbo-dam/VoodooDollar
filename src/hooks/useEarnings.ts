@@ -1,25 +1,25 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useGnosticDollar from './useGnosticDollar';
-import { ContractName } from '../gnostic-dollar';
+import useVoodooDollar from './useVoodooDollar';
+import { ContractName } from '../voodoo-dollar';
 
 const useEarnings = (poolName: ContractName) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
 
   const fetchBalance = useCallback(async () => {
-    const balance = await gnosticDollar.earnedFromBank(poolName, gnosticDollar.myAccount);
+    const balance = await voodooDollar.earnedFromBank(poolName, voodooDollar.myAccount);
     setBalance(balance);
-  }, [gnosticDollar?.isUnlocked, poolName]);
+  }, [voodooDollar?.isUnlocked, poolName]);
 
   useEffect(() => {
-    if (gnosticDollar?.isUnlocked) {
+    if (voodooDollar?.isUnlocked) {
       fetchBalance().catch((err) => console.error(err.stack));
 
       const refreshBalance = setInterval(fetchBalance, 10000);
       return () => clearInterval(refreshBalance);
     }
-  }, [gnosticDollar?.isUnlocked, poolName, gnosticDollar]);
+  }, [voodooDollar?.isUnlocked, poolName, voodooDollar]);
 
   return balance;
 };

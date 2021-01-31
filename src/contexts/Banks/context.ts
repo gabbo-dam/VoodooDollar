@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Bank } from '../../gnostic-dollar';
+import { Bank } from '../../voodoo-dollar';
 
 export interface BanksContext {
   banks: Bank[];

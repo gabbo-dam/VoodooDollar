@@ -1,20 +1,20 @@
 import { useCallback } from 'react';
-import useGnosticDollar from './useGnosticDollar';
-import { Bank } from '../gnostic-dollar';
+import useVoodooDollar from './useVoodooDollar';
+import { Bank } from '../voodoo-dollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useStake = (bank: Bank) => {
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleStake = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        gnosticDollar.stake(bank.contract, amount, bank.depositToken.decimal),
+        voodooDollar.stake(bank.contract, amount, bank.depositToken.decimal),
         `Stake ${amount} ${bank.depositTokenName} to ${bank.contract}`,
       );
     },
-    [bank, gnosticDollar],
+    [bank, voodooDollar],
   );
   return { onStake: handleStake };
 };

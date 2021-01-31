@@ -12,7 +12,7 @@ const Loader: React.FC<LoaderProps> = ({ text }) => {
   return (
     <StyledLoader>
       <CardIcon>
-        <TokenSymbol symbol="GSD" size={36} />
+        <TokenSymbol symbol="VDD" size={36} />
       </CardIcon>
       {!!text && <StyledText>{text}</StyledText>}
     </StyledLoader>

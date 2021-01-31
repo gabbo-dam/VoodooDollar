@@ -1,2 +1,2 @@
-export { GnosticDollar as default } from './GnosticDollar';
+export { VoodooDollar as default } from './VoodooDollar';
 export type { Bank, BankInfo, ContractName } from './types';

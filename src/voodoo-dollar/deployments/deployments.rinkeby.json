@@ -1,6 +1,6 @@
 {
   "Dollar": {
-    "address": "0x54ed998282ba63bD94caBef911aA0CbB49C0a034",
+    "address": "0xd3b2E001e452E187081d53B1D2C48De451c8156D",
     "abi": [
       {
         "inputs": [],
@@ -454,7 +454,7 @@
     ]
   },
   "Bond": {
-    "address": "0xB500F4d5b8348f1571680Bcd143A7c3c83F6B84d",
+    "address": "0x63B5FE73d5E14C847A04327B5d9c44b3dDD2CF40",
     "abi": [
       {
         "inputs": [],
@@ -908,7 +908,7 @@
     ]
   },
   "Share": {
-    "address": "0x7452B69b0ea81Cd9044511F7521B6036aF92f446",
+    "address": "0x192E4f8795272a25fe054C1C8baf80aE22F3FC8E",
     "abi": [
       {
         "inputs": [],
@@ -1362,7 +1362,7 @@
     ]
   },
   "Boardroom": {
-    "address": "0x2C1626f65f0A6F2De4d13cb39c36f1b1Cd4B6f37",
+    "address": "0x243B72502B22aB61D83D24A1aecF8D48b36A07a8",
     "abi": [
       {
         "inputs": [
@@ -1627,7 +1627,7 @@
     ]
   },
   "Treasury": {
-    "address": "0x426A0Ffe308Ac83b18444B5258892193F69CEcae",
+    "address": "0x2A43e075976dF980eC13B5e865eA663a41eDE9c3",
     "abi": [
       {
         "inputs": [
@@ -1921,14 +1921,14 @@
       }
     ]
   },
-  "GSDETHTRILPPool": {
-    "address": "0xB927cD3669d4B04a519DC17B9812249311888D0f",
+  "VDDETHTRILPPool": {
+    "address": "0xA1920C46aADfEb966C5CE2809Ef16911a14dfd0c",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "gnosticDollar_",
+            "name": "voodooDollar_",
             "type": "address"
           },
           {
@@ -2085,7 +2085,7 @@
       },
       {
         "inputs": [],
-        "name": "gnosticDollar",
+        "name": "voodooDollar",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -2399,14 +2399,14 @@
       }
     ]
   },
-  "GSDDAILPTokenSharePool": {
-    "address": "0x0e7e4095b9EA04A7Cb3E1bC39925D5e7221F5309",
+  "VDDDAILPTokenSharePool": {
+    "address": "0x822c721E1BEC92A36A53b1de0aA391ddadb2Cf6b",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "gnosticShare_",
+            "name": "voodooShare_",
             "type": "address"
           },
           {
@@ -2563,7 +2563,7 @@
       },
       {
         "inputs": [],
-        "name": "gnosticShare",
+        "name": "voodooShare",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -2877,14 +2877,14 @@
       }
     ]
   },
-  "GSDDAIPool": {
-    "address": "0xF62f097dBc4BBD9484914Bc0A6f344f00ceF8967",
+  "VDDDAIPool": {
+    "address": "0xc5BFB450D4aF895e67E58574e9ac845dBa9eF48f",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "gnosticDollar_",
+            "name": "voodooDollar_",
             "type": "address"
           },
           {
@@ -3055,7 +3055,7 @@
       },
       {
         "inputs": [],
-        "name": "gnosticDollar",
+        "name": "voodooDollar",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -3355,14 +3355,14 @@
       }
     ]
   },
-  "GSDUSDxPool": {
-    "address": "0x0eeF048fc8380D28f3002361dd7F19962ee8931D",
+  "VDDUSDxPool": {
+    "address": "0xddBc72E26015Eb94930Dd5aB244735237b78A098",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "gnosticDollar_",
+            "name": "voodooDollar_",
             "type": "address"
           },
           {
@@ -3519,7 +3519,7 @@
       },
       {
         "inputs": [],
-        "name": "gnosticDollar",
+        "name": "voodooDollar",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -3833,14 +3833,14 @@
       }
     ]
   },
-  "GSSDAILPTokenSharePool": {
-    "address": "0xCa51320c6B6c35a69B1c913b8261954093e4ed24",
+  "VDSDAILPTokenSharePool": {
+    "address": "0xD8521E2A9f463c38B619F16F5Ad920e27Fb28D21",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "gnosticShare_",
+            "name": "voodooShare_",
             "type": "address"
           },
           {
@@ -3997,7 +3997,7 @@
       },
       {
         "inputs": [],
-        "name": "gnosticShare",
+        "name": "voodooShare",
         "outputs": [
           {
             "internalType": "contract IERC20",

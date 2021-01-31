@@ -1,4 +1,4 @@
-import { TokenStat } from '../../gnostic-dollar/types';
+import { TokenStat } from '../../voodoo-dollar/types';
 
 export interface OverviewData {
   dollar?: TokenStat;

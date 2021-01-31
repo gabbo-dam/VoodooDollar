@@ -18,17 +18,17 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
-import useGnosticDollar from '../../../hooks/useGnosticDollar';
+import useVoodooDollar from '../../../hooks/useVoodooDollar';
 import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
 import TokenSymbol from '../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../hooks/useStakeToBoardroom';
 import useWithdrawFromBoardroom from '../../../hooks/useWithdrawFromBoardroom';
 
 const Stake: React.FC = () => {
-  const { GSS: GSS, contracts: { Boardroom } } = useGnosticDollar();
-  const [approveStatus, approve] = useApprove(GSS, Boardroom.address);
+  const { VDS: VDS, contracts: { Boardroom } } = useVoodooDollar();
+  const [approveStatus, approve] = useApprove(VDS, Boardroom.address);
 
-  const tokenBalance = useTokenBalance(GSS);
+  const tokenBalance = useTokenBalance(VDS);
   const stakedBalance = useStakedBalanceOnBoardroom();
 
   const { onStake } = useStakeToBoardroom();
@@ -38,7 +38,7 @@ const Stake: React.FC = () => {
     <DepositModal max={tokenBalance} onConfirm={(value) => {
       onStake(value);
       onDismissDeposit();
-    }} tokenName={'Gnostic Share'} />,
+    }} tokenName={'Voodoo Share'} />,
   );
 
   const [onPresentWithdraw, onDismissWithdraw] = useModal(
@@ -48,7 +48,7 @@ const Stake: React.FC = () => {
         onWithdraw(value);
         onDismissWithdraw();
       }}
-      tokenName={'Gnostic Share'}
+      tokenName={'Voodoo Share'}
     />,
   );
 
@@ -58,17 +58,17 @@ const Stake: React.FC = () => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol="GSS" />
+              <TokenSymbol symbol="VDS" />
             </CardIcon>
             <Value value={getDisplayBalance(stakedBalance)} />
-            <Label text="Gnostic Share Staked" />
+            <Label text="Voodoo Share Staked" />
           </StyledCardHeader>
           <StyledCardActions>
             {approveStatus !== ApprovalState.APPROVED ? (
               <Button
                 disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                 onClick={approve}
-                text="Approve Gnostic Share"
+                text="Approve Voodoo Share"
               />
             ) : (
               <>

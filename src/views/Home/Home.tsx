@@ -5,60 +5,60 @@ import PageHeader from '../../components/PageHeader';
 import Spacer from '../../components/Spacer';
 import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
-import useGnosticDollar from '../../hooks/useGnosticDollar';
+import useVoodooDollar from '../../hooks/useVoodooDollar';
 
 const Home: React.FC = () => {
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
 
   const [{ dollar, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [dollar, bond, share] = await Promise.all([
-      gnosticDollar.getDollarStat(),
-      gnosticDollar.getBondStat(),
-      gnosticDollar.getShareStat(),
+      voodooDollar.getDollarStat(),
+      voodooDollar.getBondStat(),
+      voodooDollar.getShareStat(),
     ]);
     setStats({ dollar, bond, share });
-  }, [gnosticDollar, setStats]);
+  }, [voodooDollar, setStats]);
 
   useEffect(() => {
-    if (gnosticDollar) {
+    if (voodooDollar) {
       fetchStats()
         .catch(err => console.error(err.stack));
     }
-  }, [gnosticDollar]);
+  }, [voodooDollar]);
 
-  const dollarAddr = useMemo(() => gnosticDollar?.GSD.address, [gnosticDollar]);
-  const shareAddr = useMemo(() => gnosticDollar?.GSS.address, [gnosticDollar]);
-  const bondAddr = useMemo(() => gnosticDollar?.GSB.address, [gnosticDollar]);
+  const dollarAddr = useMemo(() => voodooDollar?.VDD.address, [voodooDollar]);
+  const shareAddr = useMemo(() => voodooDollar?.VDS.address, [voodooDollar]);
+  const bondAddr = useMemo(() => voodooDollar?.VDB.address, [voodooDollar]);
 
   return (
     <Page>
       <PageHeader
         icon="👋"
-        subtitle="Buy, sell, and provide liquidity for Gnostic Dollar and Gnostic Shares on Uniswap"
-        title="Welcome to Gnostic Dollar!"
+        subtitle="Buy, sell, and provide liquidity for Voodoo Dollar and Voodoo Shares on Uniswap"
+        title="Welcome to Voodoo Dollar!"
       />
       <Spacer />
       <CardWrapper>
         <HomeCard
-          title={'Gnostic Dollar'}
-          symbol="GSD"
+          title={'Voodoo Dollar'}
+          symbol="VDD"
           color="#EEA7ED"
           address={dollarAddr}
           stat={dollar}
         />
         <Spacer size="lg" />
         <HomeCard
-          title={'Gnostic Share'}
-          symbol="GSS"
+          title={'Voodoo Share'}
+          symbol="VDS"
           color="#E83725"
           address={shareAddr}
           stat={share}
         />
         <Spacer size="lg" />
         <HomeCard
-          title={'Gnostic Bond'}
-          symbol="GSB"
+          title={'Voodoo Bond'}
+          symbol="VDB"
           color="#ECF25C"
           address={bondAddr}
           stat={bond}

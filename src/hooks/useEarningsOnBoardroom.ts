@@ -1,23 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useGnosticDollar from './useGnosticDollar';
+import useVoodooDollar from './useVoodooDollar';
 
 const useEarningsOnBoardroom = () => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await gnosticDollar.getEarningsOnBoardroom());
-  }, [gnosticDollar?.isUnlocked]);
+    setBalance(await voodooDollar.getEarningsOnBoardroom());
+  }, [voodooDollar?.isUnlocked]);
 
   useEffect(() => {
-    if (gnosticDollar?.isUnlocked) {
+    if (voodooDollar?.isUnlocked) {
       fetchBalance().catch((err) => console.error(err.stack));
 
       const refreshBalance = setInterval(fetchBalance, 10000);
       return () => clearInterval(refreshBalance);
     }
-  }, [gnosticDollar?.isUnlocked, setBalance]);
+  }, [voodooDollar?.isUnlocked, setBalance]);
 
   return balance;
 };

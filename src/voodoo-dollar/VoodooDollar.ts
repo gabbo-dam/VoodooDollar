@@ -8,10 +8,10 @@ import ERC20 from './ERC20';
 import { getDisplayBalance } from '../utils/formatBalance';
 
 /**
- * An API module of Gnostic Dollar contracts.
+ * An API module of Voodoo Dollar contracts.
  * All contract-interacting domain logic should be defined in here.
  */
-export class GnosticDollar {
+export class VoodooDollar {
   myAccount: string;
   provider: ethers.providers.Web3Provider;
   signer?: ethers.Signer;
@@ -19,9 +19,9 @@ export class GnosticDollar {
   contracts: { [name: string]: Contract };
   externalTokens: { [name: string]: ERC20 };
 
-  GSD: ERC20;
-  GSS: ERC20;
-  GSB: ERC20;
+  VDD: ERC20;
+  VDS: ERC20;
+  VDB: ERC20;
 
   constructor(cfg: Configuration) {
     const { defaultProvider, deployments, externalTokens } = cfg;
@@ -36,9 +36,9 @@ export class GnosticDollar {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal
     }
-    this.GSD = new ERC20(deployments.Dollar.address, provider, 'GSD');
-    this.GSS = new ERC20(deployments.Share.address, provider, 'GSS');
-    this.GSB = new ERC20(deployments.Bond.address, provider, 'GSB');
+    this.VDD = new ERC20(deployments.Dollar.address, provider, 'VDD');
+    this.VDS = new ERC20(deployments.Share.address, provider, 'VDS');
+    this.VDB = new ERC20(deployments.Bond.address, provider, 'VDB');
 
     this.config = cfg;
     this.provider = provider;
@@ -55,7 +55,7 @@ export class GnosticDollar {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.GSD, this.GSS, this.GSB, ...Object.values(this.externalTokens)];
+    const tokens = [this.VDD, this.VDS, this.VDB, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -71,7 +71,7 @@ export class GnosticDollar {
     const dollarPrice: BigNumber = await Treasury.getDollarPrice();
     return {
       priceInDAI: getDisplayBalance(dollarPrice),
-      totalSupply: await this.GSD.displayedTotalSupply(),
+      totalSupply: await this.VDD.displayedTotalSupply(),
     };
   }
 
@@ -83,14 +83,14 @@ export class GnosticDollar {
     const bondPrice = dollarPrice.div(decimals).pow(2).mul(decimals);
     return {
       priceInDAI: getDisplayBalance(bondPrice),
-      totalSupply: await this.GSB.displayedTotalSupply(),
+      totalSupply: await this.VDB.displayedTotalSupply(),
     };
   }
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.GSS),
-      totalSupply: await this.GSS.displayedTotalSupply(),
+      priceInDAI: await this.getTokenPriceFromUniswap(this.VDS),
+      totalSupply: await this.VDS.displayedTotalSupply(),
     };
   }
 

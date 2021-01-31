@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
-import useGnosticDollar from '../../../hooks/useGnosticDollar';
+import useVoodooDollar from '../../../hooks/useVoodooDollar';
 import Label from '../../../components/Label';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import useModal from '../../../hooks/useModal';
 import ExchangeModal from './ExchangeModal';
-import ERC20 from '../../../gnostic-dollar/ERC20';
+import ERC20 from '../../../voodoo-dollar/ERC20';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useCatchError from '../../../hooks/useCatchError';
@@ -38,7 +38,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   disabled = false,
 }) => {
   const catchError = useCatchError();
-  const { contracts: { Treasury } } = useGnosticDollar();
+  const { contracts: { Treasury } } = useVoodooDollar();
   const [approveStatus, approve] = useApprove(fromToken, Treasury.address);
 
   const balance = useTokenBalance(fromToken);

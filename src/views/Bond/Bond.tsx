@@ -9,7 +9,7 @@ import ExchangeCard from './components/ExchangeCard';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
 import useBondStats from '../../hooks/token/useBondStats';
-import useGnosticDollar from '../../hooks/useGnosticDollar';
+import useVoodooDollar from '../../hooks/useVoodooDollar';
 import { useTransactionAdder } from '../../state/transactions/hooks';
 import useDollarStats from '../../hooks/token/useDollarStats';
 import config from '../../config';
@@ -18,28 +18,28 @@ import LaunchCountdown from '../../components/LaunchCountdown';
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
   const { account, connect } = useWallet();
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
   const addTransaction = useTransactionAdder();
   const bondStat = useBondStats();
   const dollarStat = useDollarStats();
 
   const handleBuyBonds = useCallback(
     async (amount: string) => {
-      const tx = await gnosticDollar.buyBonds(amount);
+      const tx = await voodooDollar.buyBonds(amount);
       const bondAmount = Number(amount) / Number(dollarStat.priceInDAI);
       addTransaction(tx, {
-        summary: `Buy ${bondAmount.toFixed(2)} GSB with ${amount} GSD`,
+        summary: `Buy ${bondAmount.toFixed(2)} VDB with ${amount} VDD`,
       });
     },
-    [gnosticDollar, addTransaction, dollarStat],
+    [voodooDollar, addTransaction, dollarStat],
   );
 
   const handleRedeemBonds = useCallback(
     async (amount: string) => {
-      const tx = await gnosticDollar.redeemBonds(amount);
-      addTransaction(tx, { summary: `Redeem ${amount} GSB` });
+      const tx = await voodooDollar.redeemBonds(amount);
+      addTransaction(tx, { summary: `Redeem ${amount} VDB` });
     },
-    [gnosticDollar, addTransaction],
+    [voodooDollar, addTransaction],
   );
   const dollarIsOverpriced = useMemo(() => Number(dollarStat?.priceInDAI) > 1.0, [dollarStat]);
   const dollarIsUnderPriced = useMemo(() => Number(dollarStat?.priceInDAI) < 1.0, [dollarStat]);
@@ -56,8 +56,8 @@ const Bond: React.FC = () => {
           />
           <LaunchCountdown
             deadline={config.bondLaunchesAt}
-            description="How does Gnostic bonds work?"
-            descriptionLink="https://medium.com/gnostic-dollar#TODO"
+            description="How does Voodoo bonds work?"
+            descriptionLink="https://medium.com/voodoo-dollar#TODO"
           />
         </Page>
       </Switch>
@@ -79,11 +79,11 @@ const Bond: React.FC = () => {
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Purchase"
-                  fromToken={gnosticDollar.GSD}
-                  fromTokenName="Gnostic Dollar"
-                  toToken={gnosticDollar.GSB}
-                  toTokenName="Gnostic Bond"
-                  priceDesc={`GSB Price: ${!bondStat ? '-' : '$' + bondStat.priceInDAI}`}
+                  fromToken={voodooDollar.VDD}
+                  fromTokenName="Voodoo Dollar"
+                  toToken={voodooDollar.VDB}
+                  toTokenName="Voodoo Bond"
+                  priceDesc={`VDB Price: ${!bondStat ? '-' : '$' + bondStat.priceInDAI}`}
                   onExchange={handleBuyBonds}
                   disabled={!bondStat || dollarIsOverpriced}
                 />
@@ -92,11 +92,11 @@ const Bond: React.FC = () => {
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Redeem"
-                  fromToken={gnosticDollar.GSB}
-                  fromTokenName="Gnostic Bond"
-                  toToken={gnosticDollar.GSD}
-                  toTokenName="Gnostic Dollar"
-                  priceDesc="1 GSB = 1 GSD"
+                  fromToken={voodooDollar.VDB}
+                  fromTokenName="Voodoo Bond"
+                  toToken={voodooDollar.VDD}
+                  toTokenName="Voodoo Dollar"
+                  priceDesc="1 VDB = 1 VDD"
                   onExchange={handleRedeemBonds}
                   disabled={!bondStat || dollarIsUnderPriced}
                 />

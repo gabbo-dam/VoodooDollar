@@ -1,15 +1,15 @@
 import { useCallback } from 'react';
-import useGnosticDollar from './useGnosticDollar';
-import { Bank } from '../gnostic-dollar';
+import useVoodooDollar from './useVoodooDollar';
+import { Bank } from '../voodoo-dollar';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useRedeem = (bank: Bank) => {
-  const gnosticDollar = useGnosticDollar();
+  const voodooDollar = useVoodooDollar();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleRedeem = useCallback(() => {
-    handleTransactionReceipt(gnosticDollar.exit(bank.contract), `Redeem ${bank.contract}`);
-  }, [bank, gnosticDollar]);
+    handleTransactionReceipt(voodooDollar.exit(bank.contract), `Redeem ${bank.contract}`);
+  }, [bank, voodooDollar]);
 
   return { onRedeem: handleRedeem };
 };
