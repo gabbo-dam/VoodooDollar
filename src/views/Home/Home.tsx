@@ -6,6 +6,7 @@ import Spacer from '../../components/Spacer';
 import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
 import useVoodooDollar from '../../hooks/useVoodooDollar';
+import VoodooDollar from '../../icons/voodoodollar'
 
 const Home: React.FC = () => {
   const voodooDollar = useVoodooDollar();
@@ -34,7 +35,7 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon="👋"
+        icon={<VoodooDollar />}
         subtitle="Buy, sell, and provide liquidity for Voodoo Dollar and Voodoo Shares on Uniswap"
         title="Welcome to Voodoo Dollar!"
       />

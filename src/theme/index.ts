@@ -1,4 +1,4 @@
-import { black, purple, teal, grey, red, white } from './colors'
+import { black, purple, teal, grey, red, white, brown } from './colors'
 
 const theme = {
   borderRadius: 12,
@@ -6,6 +6,7 @@ const theme = {
     black,
     grey,
     purple,
+    brown,
     primary: {
       light: red[200],
       main: red[500],

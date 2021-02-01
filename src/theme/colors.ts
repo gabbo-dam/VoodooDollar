@@ -30,6 +30,10 @@ export const grey = {
   900: '#212121',
 }
 
+export const brown = {
+  100: '#38282d'
+}
+
 export const bg = '#000000';
 
 export const teal = {
