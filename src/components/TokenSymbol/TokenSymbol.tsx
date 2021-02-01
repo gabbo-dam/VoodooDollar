@@ -50,8 +50,8 @@ const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
       <img
         src={logosBySymbol[symbol]}
         alt={`${symbol} Logo`}
-        width={size}
-        height={size}
+        width={50}
+        height={50}
       />
     )
   }
