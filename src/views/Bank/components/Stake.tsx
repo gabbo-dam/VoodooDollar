@@ -64,12 +64,20 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol={bank.depositToken.symbol} size={54} />
+              <TokenSymbol symbol={bank.depositToken.symbol} size={64} />
               {(() => {
                 if (symbol==='VDS_DAI-UNI-LPv2') {
-                  return <TokenSymbol  symbol='DAI' size={54} />
+                  return (
+                  <div style={{marginLeft:'-25px', marginTop:'10px'}}>
+                    <TokenSymbol  symbol='DAI' size={64} />
+                  </div>
+                  )
                } else if(symbol==='VDD_DAI-UNI-LPv2') {
-                 return <TokenSymbol symbol='DAI' size={54} />
+                 return (
+                   <div style={{marginLeft:'-25px', marginTop:'10px'}}>
+                    <TokenSymbol  symbol='DAI' size={64} />
+                  </div>
+                 )
                }
               })()}
             </CardIcon>

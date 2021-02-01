@@ -110,7 +110,7 @@ const StyledCardTitle = styled.div`
 `;
 
 const StyledCardIcon = styled.div`
-  background-color: ${(props) => props.theme.color.grey[900]};
+  
   width: 72px;
   height: 72px;
   border-radius: 36px;
