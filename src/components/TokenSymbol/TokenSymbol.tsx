@@ -35,7 +35,7 @@ const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
 
   if(symbol==='VoodooDollar'){
     return <VoodooDollar style={{width: '64', height: '64'}}/>
-  } else if(symbol==='VoodooShare'){
+  } else if(symbol==='VoodooShare' || symbol==='VDD_DAI-UNI-LPv2' || symbol==='VDS_DAI-UNI-LPv2' || symbol==='VDS' || symbol==='VDD'){
     return <VoodooShare />
   } else if (symbol==='VoodooBond') {
     return <VoodooBond />
