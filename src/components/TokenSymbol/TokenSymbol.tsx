@@ -42,16 +42,16 @@ const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
   } else if (symbol==='VoodooBond') {
     return <VoodooBond />
   } else if (symbol==='USDx') {
-    return <img src="https://assets.coingecko.com/coins/images/12377/small/rCdP56C.png?1599445426" alt="USDx"/>
+    return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/12377/small/rCdP56C.png?1599445426" alt="USDx"/>
   } else if (symbol==='ETH_TRI-UNI-LPv2') {
-    return <img src="https://assets.coingecko.com/coins/images/13379/small/trinity_logo.png?1608030983" alt="Trinity"/>
+    return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/13379/small/trinity_logo.png?1608030983" alt="Trinity"/>
   }else {
     return (
       <img
         src={logosBySymbol[symbol]}
         alt={`${symbol} Logo`}
-        width={50}
-        height={50}
+        width={64}
+        height={64}
       />
     )
   }
