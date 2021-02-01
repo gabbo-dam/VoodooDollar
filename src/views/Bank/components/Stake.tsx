@@ -55,6 +55,9 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
     />,
   );
 
+  let symbol=bank.depositToken.symbol
+  console.log(symbol)
+
   return (
     <Card>
       <CardContent>
@@ -62,6 +65,13 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={bank.depositToken.symbol} size={54} />
+              {(() => {
+                if (symbol==='VDS_DAI-UNI-LPv2') {
+                  return <TokenSymbol  symbol='DAI' size={54} />
+               } else if(symbol==='VDD_DAI-UNI-LPv2') {
+                 return <TokenSymbol symbol='DAI' size={54} />
+               }
+              })()}
             </CardIcon>
             <Value value={getDisplayBalance(stakedBalance, bank.depositToken.decimal)} />
             <Label text={`${bank.depositTokenName} Staked`} />

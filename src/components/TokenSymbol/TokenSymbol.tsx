@@ -33,11 +33,11 @@ const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
   //   throw new Error(`Invalid VoodooLogo symbol: ${symbol}`);
   // }
 
-  if(symbol==='VoodooDollar'){
+  if(symbol==='VoodooDollar' || symbol==='VDD' || symbol==='VDD_DAI-UNI-LPv2'){
     return <VoodooDollar style={{width: '64', height: '64'}}/>
-  } else if(symbol==='VoodooShare' || symbol==='VDD_DAI-UNI-LPv2' || symbol==='VDS_DAI-UNI-LPv2' || symbol==='VDS' || symbol==='VDD'){
+  } else if(symbol==='VoodooShare'  || symbol==='VDS_DAI-UNI-LPv2' || symbol==='VDS' ){
     return <VoodooShare />
-  } else if (symbol==='VoodooBond') {
+  } else if (symbol==='VoodooBond' || symbol==='VDB') {
     return <VoodooBond />
   } else if (symbol==='VoodooBond') {
     return <VoodooBond />
