@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import farmer from '../../assets/img/farmer.png';
+import VoodooDollar from '../../icons/voodoodollar'
 
 const Logo: React.FC = () => {
   return (
     <StyledLogo>
-      <img src={farmer} height="32" style={{ marginTop: -4 }} />
+      <VoodooDollar src={farmer} height="40" style={{ marginTop: -4 }}/>
       <StyledLink href="/">Voodoo Dollar</StyledLink>
     </StyledLogo>
   );

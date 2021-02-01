@@ -33,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
       break
     case 'default':
     default:
-      buttonColor = color.primary.main
+      buttonColor = color.white
   }
 
   let boxShadow: string
@@ -94,10 +94,12 @@ interface StyledButtonProps {
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
+  min-width: 153px;
+  min-height: 34px;
   align-items: center;
-  background-color: ${props => props.theme.color.grey[900]};
+  background-color: ${props => props.theme.color.purple[900]};
   border: 0;
-  border-radius: 12px;
+  border-radius: 58px;
   box-shadow: ${props => props.boxShadow};
   color: ${props => !props.disabled ? props.color : `${props.color}55`};
   cursor: pointer;

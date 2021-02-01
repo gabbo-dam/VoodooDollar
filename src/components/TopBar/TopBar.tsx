@@ -8,6 +8,8 @@ import AccountButton from './components/AccountButton'
 import Nav from './components/Nav'
 import TxButton from './components/TxButton'
 
+import VoodooDollar from '../../icons/voodoodollar'
+
 const TopBar: React.FC = () => {
   return (
     <StyledTopBar>

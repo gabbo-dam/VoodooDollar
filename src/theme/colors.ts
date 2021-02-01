@@ -9,6 +9,7 @@ export const purple = {
   200: '#bd7cfe',
   400: '#ab47bc',
   700: '#7b1fa2',
+  900: '#50248f'
 }
 
 export const red = {

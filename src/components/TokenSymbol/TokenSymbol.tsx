@@ -7,6 +7,9 @@ import DAILogo from '../../assets/img/DAI.png';
 import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
+import VoodooDollar from '../../icons/voodoodollar'
+import VoodooShare from '../../icons/voodooshare'
+import VoodooBond from '../../icons/voodoobond'
 
 const logosBySymbol: {[title: string]: string} = {
   'VDD': vddLogo,
@@ -17,25 +20,37 @@ const logosBySymbol: {[title: string]: string} = {
   'USDx': USDCLogo,
   'VDD_DAI-UNI-LPv2': vddLogo,
   'VDS_DAI-UNI-LPv2': vdsLogo,
+  
 };
 
 type VoodooLogoProps = {
-  symbol: string;
+  symbol?: string;
   size?: number;
 }
 
 const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
-  if (!logosBySymbol[symbol]) {
-    throw new Error(`Invalid VoodooLogo symbol: ${symbol}`);
+  // if (!logosBySymbol[symbol]) {
+  //   throw new Error(`Invalid VoodooLogo symbol: ${symbol}`);
+  // }
+
+  if(symbol==='VoodooDollar'){
+    return <VoodooDollar />
+  } else if(symbol==='VoodooShare'){
+    return <VoodooShare />
+  } else if (symbol==='VoodooBond') {
+    return <VoodooBond />
+  }else {
+    return (
+      <img
+        src={logosBySymbol[symbol]}
+        alt={`${symbol} Logo`}
+        width={size}
+        height={size}
+      />
+    )
   }
-  return (
-    <img
-      src={logosBySymbol[symbol]}
-      alt={`${symbol} Logo`}
-      width={size}
-      height={size}
-    />
-  )
+
+
 };
 
 export default TokenSymbol;

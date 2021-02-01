@@ -25,7 +25,7 @@ const Home: React.FC = () => {
       fetchStats()
         .catch(err => console.error(err.stack));
     }
-  }, [voodooDollar]);
+  }, [fetchStats, voodooDollar]);
 
   const dollarAddr = useMemo(() => voodooDollar?.VDD.address, [voodooDollar]);
   const shareAddr = useMemo(() => voodooDollar?.VDS.address, [voodooDollar]);
@@ -42,24 +42,27 @@ const Home: React.FC = () => {
       <CardWrapper>
         <HomeCard
           title={'Voodoo Dollar'}
-          symbol="VDD"
-          color="#EEA7ED"
+          symbol="VoodooDollar"
+          color="#D680FF"
+          background="#260933"
           address={dollarAddr}
           stat={dollar}
         />
         <Spacer size="lg" />
         <HomeCard
           title={'Voodoo Share'}
-          symbol="VDS"
-          color="#E83725"
+          symbol="VoodooShare"
+          color="#D89F98"
+          background="#38282d"
           address={shareAddr}
           stat={share}
         />
         <Spacer size="lg" />
         <HomeCard
           title={'Voodoo Bond'}
-          symbol="VDB"
-          color="#ECF25C"
+          symbol="VoodooBond"
+          color="#FFBE47"
+          background="#412f1c"
           address={bondAddr}
           stat={bond}
         />
