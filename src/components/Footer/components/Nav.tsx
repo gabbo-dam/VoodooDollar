@@ -4,6 +4,7 @@ import Telegram from '../../../icons/telegram'
 import Unicorn from '../../../icons/unicorn'
 import Twitter from '../../../icons/twitter'
 import Audit from '../../../icons/audit'
+import Medium from '../../../icons/medium/index.jsx'
 
 const Nav: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const Nav: React.FC = () => {
       <StyledLink href="#"><Unicorn /></StyledLink>
       <StyledLink href="#"><Twitter /></StyledLink>
       <StyledLink href="#"><Telegram /></StyledLink>
+      <StyledLink href="#"><Medium /></StyledLink>
       <StyledLink href="#"><Audit /></StyledLink>
     </StyledNav>
   )
