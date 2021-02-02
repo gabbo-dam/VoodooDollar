@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import VoodooDollar from '../../icons/voodoodollar'
 
 interface PageHeaderProps {
   icon: React.ReactNode,
@@ -30,10 +31,10 @@ const StyledPageHeader = styled.div`
 
 const StyledIcon = styled.div`
   font-size: 96px;
-  height: 96px;
+  height: 162px;
   line-height: 96px;
   text-align: center;
-  width: 96px;
+  width: 162px;
 `
 
 const StyledTitle = styled.h1`
