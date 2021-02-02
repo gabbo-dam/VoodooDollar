@@ -41,7 +41,7 @@ const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
   } else if (symbol==='VoodooBond') {
     return <VoodooBond />
   } else if (symbol==='ETH_PROPHET-UNI-LPv2') {
-    return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/12377/small/rCdP56C.png?1599445426" alt="PROPHET"/>
+    return <img width={64} height={64} style={{borderRadius:'50px'}} src="https://i.ibb.co/xHHgKJ4/icon.jpg" alt="Trinity"/>
   } else if (symbol==='ETH_TRI-UNI-LPv2') {
     return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/13379/small/trinity_logo.png?1608030983" alt="Trinity"/>
   }else {

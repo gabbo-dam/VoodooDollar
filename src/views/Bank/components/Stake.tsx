@@ -56,7 +56,6 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
   );
 
   let symbol=bank.depositToken.symbol
-  console.log(symbol)
 
   return (
     <Card>

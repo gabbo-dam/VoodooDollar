@@ -1,22 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import Twitter from '../../../icons/twitter'
-import Discord from '../../../icons/discord'
 import Telegram from '../../../icons/telegram'
 import Unicorn from '../../../icons/unicorn'
-import M from '../../../icons/m/m'
-import Github from '../../../icons/twitter'
+import Twitter from '../../../icons/twitter'
 import Audit from '../../../icons/audit'
 
 const Nav: React.FC = () => {
   return (
     <StyledNav>
       <StyledLink href="#"><Unicorn /></StyledLink>
-      <StyledLink href="#"><Github /></StyledLink>
       <StyledLink href="#"><Twitter /></StyledLink>
       <StyledLink href="#"><Telegram /></StyledLink>
-      <StyledLink href="#"><Discord /></StyledLink>
-      <StyledLink href="#"><M /></StyledLink>
       <StyledLink href="#"><Audit /></StyledLink>
     </StyledNav>
   )
