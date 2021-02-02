@@ -13,7 +13,6 @@ const Nav: React.FC = () => {
       <StyledLink href="#"><Twitter /></StyledLink>
       <StyledLink href="#"><Telegram /></StyledLink>
       <StyledLink href="#"><Medium /></StyledLink>
-      <StyledLink href="#"><Audit /></StyledLink>
     </StyledNav>
   )
 }
