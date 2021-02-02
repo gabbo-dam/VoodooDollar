@@ -12,9 +12,9 @@ const Nav: React.FC = () => {
   return (
     <StyledNav>
       <StyledLink href="#"><Unicorn /></StyledLink>
-      <StyledLink href="https://github.com/Voodoo-Dollar"><Github /></StyledLink>
-      <StyledLink href="https://twitter.com/VoodooDollar"><Twitter /></StyledLink>
-      <StyledLink href="https://t.me/voodoodollar"><Telegram /></StyledLink>
+      <StyledLink href="#"><Github /></StyledLink>
+      <StyledLink href="#"><Twitter /></StyledLink>
+      <StyledLink href="#"><Telegram /></StyledLink>
       <StyledLink href="#"><Discord /></StyledLink>
       <StyledLink href="#"><M /></StyledLink>
       <StyledLink href="#"><Audit /></StyledLink>

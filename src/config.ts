@@ -9,16 +9,15 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'wss://rinkeby.infura.io/ws/v3/751553d8430144e99fb0340edc99d9ab',
     deployments: require('./voodoo-dollar/deployments/deployments.rinkeby.json'),
     externalTokens: {
-      USDx: ['0x0a4612DE67DF29115a2E320aff6601C32D38B4C1', 9],
+      'ETH_PROPHET-UNI-LPv2': ['0x22aDE3578c58BC4e932fc23fa7AebCf9406DBEac', 18],
       'ETH_TRI-UNI-LPv2': ['0xe62b0f96fd9335a9e05bfe866def8a7c5cb0bce9', 18],
       DAI: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
-      // TODO: replace with real address
-      'VDD_DAI-UNI-LPv2': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
-      'VDS_DAI-UNI-LPv2': ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
+      'VDD_DAI-UNI-LPv2': ['0x19D9ec051f944Fc3C57338F80Da62De78C7cF2bc', 18],
+      'VDS_DAI-UNI-LPv2': ['0xCc4fC5eEE4ae95cEd29d128095495bE8A6f3A34A', 18],
     },
-    baseLaunchDate: new Date('2020-01-29T00:00:00Z'),
-    bondLaunchesAt: new Date('2020-02-03T00:00:00Z'),
-    boardroomLaunchesAt: new Date('2020-02-03T00:00:00Z'),
+    baseLaunchDate: new Date('2020-02-02T00:00:00Z'),
+    bondLaunchesAt: new Date('2020-02-08T00:00:00Z'),
+    boardroomLaunchesAt: new Date('2020-02-02T00:00:00Z'),
   },
   production: {
     chainId: ChainId.RINKEBY,
@@ -26,32 +25,31 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'wss://rinkeby.infura.io/ws/v3/751553d8430144e99fb0340edc99d9ab',
     deployments: require('./voodoo-dollar/deployments/deployments.rinkeby.json'),
     externalTokens: {
-      USDx: ['0x0a4612DE67DF29115a2E320aff6601C32D38B4C1', 9],
+      'ETH_PROPHET-UNI-LPv2': ['0x22aDE3578c58BC4e932fc23fa7AebCf9406DBEac', 18],
       'ETH_TRI-UNI-LPv2': ['0xe62b0f96fd9335a9e05bfe866def8a7c5cb0bce9', 18],
       DAI: ['0x8c96CeeB1569bB9442f2AdbeEcF4774928E2b7A3', 18],
-      // TODO: replace with real address
-      'VDD_DAI-UNI-LPv2': ['0xab4bdfD59dbC4503A9cAE8c17433A3dc65235160', 18],
-      'VDS_DAI-UNI-LPv2': ['0x65f3D49963638A8DCb2377fbdE17f1b790c94477', 18],
+      'VDD_DAI-UNI-LPv2': ['0x19D9ec051f944Fc3C57338F80Da62De78C7cF2bc', 18],
+      'VDS_DAI-UNI-LPv2': ['0xCc4fC5eEE4ae95cEd29d128095495bE8A6f3A34A', 18],
     },
-    baseLaunchDate: new Date('2021-01-28T00:00:00Z'),
-    bondLaunchesAt: new Date('2020-02-02T00:00:00Z'),
+    baseLaunchDate: new Date('2020-02-02T00:00:00Z'),
+    bondLaunchesAt: new Date('2020-02-08T00:00:00Z'),
     boardroomLaunchesAt: new Date('2020-02-02T00:00:00Z'),
   },
 };
 
 export const bankDefinitions: { [contractName: string]: BankInfo } = {
   VDDETHTRILPPool: {
-    name: 'Earn VDD by ETH-TRI LP (3x)',
+    name: 'Earn VDD by ETH-TRI LP (2x)',
     contract: 'VDDETHTRILPPool',
     depositTokenName: 'ETH_TRI-UNI-LPv2',
     earnTokenName: 'VDD',
     finished: false,
     sort: 1,
   },
-  VDDUSDxPool: {
-    name: 'Earn VDD by USDx',
-    contract: 'VDDUSDxPool',
-    depositTokenName: 'USDx',
+  VDDETHPROPHETPool: {
+    name: 'Earn VDD by ETH-PROPHET LP (2x)',
+    contract: 'VDDETHPROPHETLPPool',
+    depositTokenName: 'ETH_PROPHET-UNI-LPv2',
     earnTokenName: 'VDD',
     finished: false,
     sort: 2,

@@ -17,10 +17,9 @@ const logosBySymbol: {[title: string]: string} = {
   'VDS': vdsLogo,
   'DAI': DAILogo,
   'ETH_TRI-UNI-LPv2': sUSDLogo,
-  'USDx': USDCLogo,
+  'ETH_PROPHET-UNI-LPv2': USDCLogo,
   'VDD_DAI-UNI-LPv2': vddLogo,
-  'VDS_DAI-UNI-LPv2': vdsLogo,
-  
+  'VDS_DAI-UNI-LPv2': vdsLogo,  
 };
 
 type VoodooLogoProps = {
@@ -41,8 +40,8 @@ const TokenSymbol: React.FC<VoodooLogoProps> = ({ symbol, size = 64 }) => {
     return <VoodooBond />
   } else if (symbol==='VoodooBond') {
     return <VoodooBond />
-  } else if (symbol==='USDx') {
-    return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/12377/small/rCdP56C.png?1599445426" alt="USDx"/>
+  } else if (symbol==='ETH_PROPHET-UNI-LPv2') {
+    return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/12377/small/rCdP56C.png?1599445426" alt="PROPHET"/>
   } else if (symbol==='ETH_TRI-UNI-LPv2') {
     return <img width={64} height={64} src="https://assets.coingecko.com/coins/images/13379/small/trinity_logo.png?1608030983" alt="Trinity"/>
   }else {
